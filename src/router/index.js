@@ -70,6 +70,15 @@ const routes = [
           import(
             /* webpackChunkName: "Main" */ '../views/extra/Draggable/Draggable.vue'
           )
+      },
+      {
+        // 拖拉
+        path: 'rrWeb',
+        name: 'rrWeb',
+        component: () =>
+          import(
+            /* webpackChunkName: "Main" */ '../views/extra/rrweb/index.vue'
+          )
       }
     ]
   },
