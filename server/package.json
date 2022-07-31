@@ -1,0 +1,22 @@
+{
+  "name": "test_node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./src/files/main.js",
+    "start2": "nodemon ./src/files/main_big.js",
+    "axios": "nodemon ./src/files/main-express.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2",
+    "koa-body": "^5.0.0",
+    "koa-static": "^5.0.0",
+    "koa2": "^2.0.0-alpha.7",
+    "multiparty": "^4.2.2"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "start": "nodemon ./server/src/main.js",
+    "start2": "nodemon ./server/src/main_big.js",
+    "axios": "nodemon ./server/src/main-express.js",
+    "vue": "nodemon ./server/src/vue.js"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "core-js": "^3.6.5",
+    "element-ui": "^2.15.9",
+    "express": "^4.17.2",
+    "koa-body": "^5.0.0",
+    "koa-static": "^5.0.0",
+    "koa2": "^2.0.0-alpha.7",
+    "multiparty": "^4.2.2",
+    "qs": "^6.9.4",
+    "sass-loader": "^7.0.0",
+    "style-loader": "^3.3.1",
+    "vue": "^2.6.11",
+    "vue-cli-plugin-style-resources-loader": "^0.1.5",
+    "vue-router": "^3.2.0",
+    "xlsx": "^0.16.9"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "less": "^3.0.4",
+    "less-loader": "^5.0.0",
+    "node-sass": "^7.0.1",
+    "sass-loader": "^13.0.2",
+    "style-resources-loader": "^1.5.0",
+    "vue-template-compiler": "^2.6.11"
+  }
+}
