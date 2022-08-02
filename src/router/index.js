@@ -93,14 +93,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "Main" */ '../views/Layout.vue'),
     children: [
       {
-        path: 'index',
-        name: 'index',
+        path: 'elementform',
+        name: 'elementform',
         component: () => import(/* webpackChunkName: "Main" */ '../views/components/index.vue')
-      },
-      {
-        path: 'xform',
-        name: 'xform',
-        component: () => import(/* webpackChunkName: "Main" */ '../views/components/XForm.vue')
       },
     ]
   },
