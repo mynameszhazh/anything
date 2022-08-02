@@ -8,8 +8,8 @@
 export default {
   provide() {
     return {
-      form: this
-    }
+      form: this,
+    };
   },
   data() {
     return {};
@@ -17,14 +17,29 @@ export default {
   props: {
     model: {
       type: Object,
-      required: true
+      required: true,
     },
     rules: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
   },
-  methods: {},
+  methods: {
+    validate(cb) {
+      let resultArr = this.$children
+        .filter(item => item.prop)
+        .map(item => {
+          // console.log(item.validate())
+          return item.validate()
+        })
+      console.log(resultArr)
+      Promise.all(resultArr)
+        .then(res => {
+           cb(true)
+        })
+        .catch(err => cb(false))
+    },
+  },
 };
 </script>
 

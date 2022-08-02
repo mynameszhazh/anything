@@ -20,7 +20,6 @@ export default {
   props: {
     label: {
       type: String,
-      default: "label",
     },
     prop: {
       type: String
@@ -37,10 +36,12 @@ export default {
       // console.log('validate', this.form.rules[this.prop])   
       let rules = this.form.rules[this.prop]
       let value = this.form.model[this.prop]
+
       let desc = {[this.prop]: rules}
       let schema = new Schema(desc)
       // 这个 validate 
-      schema.validate({[this.prop]: value}, (errors) => {
+      // 这个版本的validate 不是一个promise的函数了
+      return schema.validate({[this.prop]: value}, (errors) => {
         if(errors) {
           this.error = errors[0].message
         } else {

@@ -11,6 +11,7 @@
     "vue": "nodemon ./server/src/vue.js"
   },
   "dependencies": {
+    "async-validator": "^4.2.5",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "element-ui": "^2.15.9",
