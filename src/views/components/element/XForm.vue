@@ -32,7 +32,6 @@ export default {
           // console.log(item.validate())
           return item.validate()
         })
-      console.log(resultArr)
       Promise.all(resultArr)
         .then(res => {
            cb(true)

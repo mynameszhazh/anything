@@ -19,9 +19,10 @@
 </template>
 
 <script>
-import Xinput from "./XInput.vue";
-import XFromItem from "./XFromItem.vue";
-import XForm from "./XForm.vue";
+import Xinput from "./element/XInput.vue";
+import XFromItem from "./element/XFromItem.vue";
+import XForm from "./element/XForm.vue";
+import Notice from "../../components/Notice.vue";
 export default {
   data() {
     return {
@@ -53,9 +54,23 @@ export default {
     login() {
       this.$refs["xform"].validate((result) => {
         if (result) {
-          alert("login 成功");
+          // alert("login 成功");
+          const comp = this.$createComp(Notice, {
+            message: "login 成功",
+            type: "success",
+          });
+          comp.show();
         } else {
-          this.$message.error("登录失败");
+          // this.$message.error("登录失败");
+          const comp = this.$createComp(Notice, {
+            message: "登录失败",
+            type: "error",
+            duration: 5000,
+          });
+          comp.show();
+          setTimeout(() => {
+            comp.hide() 
+          }, 1000);
         }
       });
     },

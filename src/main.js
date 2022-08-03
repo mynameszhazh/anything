@@ -2,6 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import directive from './directive';
+import createComp from './utils/create';
 import LazyLoad from './directive/lazyLoad';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -10,6 +11,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './assets/styles/reset.min.css'
 import './assets/styles/basic.css' 
 
+Vue.prototype.$createComp = createComp
 //  自定义指令 常规 
 Vue.use(directive)
 // 图片懒加载, 因为方式有些特殊 需要单独拿出来用
