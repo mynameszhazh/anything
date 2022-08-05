@@ -22,7 +22,6 @@
 import Xinput from "./element/XInput.vue";
 import XFromItem from "./element/XFromItem.vue";
 import XForm from "./element/XForm.vue";
-import Notice from "../../components/Notice.vue";
 export default {
   data() {
     return {
@@ -55,14 +54,14 @@ export default {
       this.$refs["xform"].validate((result) => {
         if (result) {
           // alert("login 成功");
-          const comp = this.$createComp(Notice, {
+          const comp = this.$notice({
             message: "login 成功",
             type: "success",
           });
           comp.show();
         } else {
           // this.$message.error("登录失败");
-          const comp = this.$createComp(Notice, {
+          const comp = this.$notice({
             message: "登录失败",
             type: "error",
             duration: 5000,

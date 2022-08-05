@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Notice from '../components/Notice.vue'
 function createComp(component, props) {
   // 这样就可以得到一个  半真实的dom
   let vm = new Vue({
@@ -20,4 +21,11 @@ function createComp(component, props) {
   return comp
 }
 
-export default createComp
+export default {
+  install(Vue) {
+    Vue.prototype.$notice = function(options) {
+      // 函数柯里化一下
+      return createComp(Notice, options)
+    }
+  }
+} 

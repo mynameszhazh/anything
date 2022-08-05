@@ -1,7 +1,8 @@
 <template>
   <div class="box">
-    <Children></Children>
-    <button @click="onclick">changefoo</button>
+    <!-- <Children></Children> -->
+    <!-- <button @click="onclick">changefoo</button> -->
+    <input aria-label="input" value="1333"/>
   </div>
 </template>
 
