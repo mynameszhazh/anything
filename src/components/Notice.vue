@@ -44,7 +44,7 @@ export default {
     },
     hide() {
       this.isshow = false;
-      this.remove();
+      // this.remove();
     },
     handleClose() {
       this.remove();

@@ -61,7 +61,7 @@ export default {
           comp.show();
         } else {
           // this.$message.error("登录失败");
-          const comp = this.$notice({
+          const comp = this.$notice2({
             message: "登录失败",
             type: "error",
             duration: 5000,
