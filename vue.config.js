@@ -13,16 +13,17 @@ const path = require('path')
 module.exports = {
   // 使用 public里面的静态资源的使用可以使用这样的方式
   publicPath: process.env.NODE_ENV === 'production' ? '/cart' : '/',
-  productionSourceMap: false,
+  productionSourceMap: true,
   devServer: {
-    before(app){
+    before(app) {
       // app 就是一个exporess实例
       app.get('/api/courses', (req, res) => {
         setTimeout(() => {
-          res.json([{name: 'xjh1', age: 18},{name: 'xjh2', age: 181}])  
+          res.json([{ name: 'xjh1', age: 18 }, { name: 'xjh2', age: 181 }])
         }, 1000);
       })
     },
+    open: true,
     port: 8081,
     proxy: 'http://127.0.0.1:8080'
   },
@@ -48,20 +49,21 @@ module.exports = {
   //       .end()
   //   })
   // }
-  // configureWebpack: {
-  //   module: {
-  //     rules: [{
-  //       test: /\.less$/,
-  //       use: ['style-loader', 'css-loader', 'less-loader', {
-  //         loader: 'style-resources-loader',
-  //         options: {
-  //           patterns: path.resolve(__dirname, './src/styles/imports.less'),
-  //           injector: 'append'
-  //         }
-  //       }]
-  //     }]
-  //   },
-  // }
+  configureWebpack: {
+    devtool: 'source-map',
+    // module: {
+    //   rules: [{
+    //     test: /\.less$/,
+    //     use: ['style-loader', 'css-loader', 'less-loader', {
+    //       loader: 'style-resources-loader',
+    //       options: {
+    //         patterns: path.resolve(__dirname, './src/styles/imports.less'),
+    //         injector: 'append'
+    //       }
+    //     }]
+    //   }]
+    // },
+  },
   pluginOptions: {
     'style-resources-loader': {
       preProcessor: 'less',

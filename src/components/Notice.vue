@@ -8,8 +8,6 @@
 </template>
 
 <script>
-import { clearTimeout } from 'timers';
-
 export default {
   props: {
     message: {

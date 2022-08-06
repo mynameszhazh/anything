@@ -8,7 +8,7 @@ function create(Component, props) {
   document.body.appendChild(comp.$el)
   comp.remove = () => {
     document.body.removeChild(comp.$el)
-    comp.$destroy()
+    comp.$destroy() 
   }
   return comp
 }
