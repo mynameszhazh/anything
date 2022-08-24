@@ -49,6 +49,12 @@ const routes = [
         name: 'HPrenderData',
         component: () => import(/* webpackChunkName: "Main" */ '../views/extra/HPrenderData.vue')
       },
+      {
+        // 拖拉 
+        path: 'Draggable',
+        name: 'Draggable',
+        component: () => import(/* webpackChunkName: "Main" */ '../views/extra/Draggable/Draggable.vue')
+      },
     ]
   }, {
     path: '/directive',
