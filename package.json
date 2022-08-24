@@ -26,6 +26,7 @@
     "vue": "^2.6.11",
     "vue-cli-plugin-style-resources-loader": "^0.1.5",
     "vue-router": "^3.2.0",
+    "vuedraggable": "^2.24.3",
     "xlsx": "^0.16.9"
   },
   "devDependencies": {
