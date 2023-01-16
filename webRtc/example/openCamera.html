@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box">
+      <video id="local-video" autoplay playsinline controls></video>
+      <button id="showVideo">打开摄像头</button>
+    </div>
+  </body>
+  <script>
+    let contrains = {
+      audio: true,
+      video: true,
+    };
+    function onOpenCamera(e) {
+      navigator.mediaDevices
+        .getUserMedia(contrains)
+        .then(handleSuccess)
+        .catch(null);
+    }
+    function handleSuccess(stream) {
+      console.log(stream)
+      const video = document.querySelector("#local-video");
+      video.srcObject = stream;
+    }
+
+    let btn = document.querySelector("#showVideo");
+    btn.addEventListener('click', onOpenCamera)
+  </script>
+</html>
