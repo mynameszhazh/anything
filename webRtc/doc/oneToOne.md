@@ -26,6 +26,7 @@
       - 拿到浏览器支持的媒体信息, 但却是一个应答者进行创建的
     - setLocalDescription
       - 本地保存这些信息
+  - 所有的东西保存完毕之后,就会进行 ontrack 之类的监听操作
 
 ## 加入 Stream/Track
 

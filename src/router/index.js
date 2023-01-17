@@ -205,6 +205,24 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/webRTC",
+    name: "webRTC",
+    component: () =>
+      import(
+        /* webpackChunkName: "Main" */ "../views/Layout.vue"
+      ),
+    children: [
+      {
+        path: "chat",
+        name: "chat",
+        component: () =>
+          import(
+            /* webpackChunkName: "Main" */ "../views/webRtc/chat.vue"
+          ),
+      },
+    ],
+  },
 ];
 
 export const routesMeaus = [];
