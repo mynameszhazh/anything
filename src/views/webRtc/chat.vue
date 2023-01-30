@@ -76,7 +76,7 @@ export default {
       const message = JSON.stringify(jsonMsg)
       this.zeroRTCEngine.sendMessage(message)
     },
-    doleave() {
+    doleave(roomId) {
       const jsonMsg = {
         cmd: SIGNAL_TYPE_LEAVE,
         roomId: roomId,
@@ -100,7 +100,7 @@ export default {
     },
     handleLeave() {
       console.log('handleLeave 处理房间离开')
-      this.doleave()
+      this.doleave(this.roomId)
       if (this.localVideo) {
         this.localVideo.srcObject = null
         this.localStream = null

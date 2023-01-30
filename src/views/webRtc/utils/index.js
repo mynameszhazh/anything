@@ -1,5 +1,13 @@
-import { SIGNAL_TYPE_NEW_PEER, SIGNAL_TYPE_PEER_LEAVE, SIGNAL_TYPE_RESP_JOIN } from '../const/index.js'
-import { handleRemoteNewPeer, handleRemotePeerLeave, handleResponseJoin } from '../control/index.js'
+import {
+  SIGNAL_TYPE_NEW_PEER,
+  SIGNAL_TYPE_PEER_LEAVE,
+  SIGNAL_TYPE_RESP_JOIN
+} from '../const/index.js'
+import {
+  handleRemoteNewPeer,
+  handleRemotePeerLeave,
+  handleResponseJoin
+} from '../control/index.js'
 
 let zeroRTCEngine = null
 /**
@@ -48,7 +56,7 @@ export class ZeroRTCEngine {
   onMessage(event) {
     console.log('onMessage', event.data)
     var jsonMsg = JSON.parse(event.data)
-    switch (jsoeMsg.cmd) {
+    switch (jsonMsg.cmd) {
       case SIGNAL_TYPE_NEW_PEER:
         handleRemoteNewPeer(jsonMsg)
         break

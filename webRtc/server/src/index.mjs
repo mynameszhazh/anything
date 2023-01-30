@@ -13,6 +13,7 @@ const server = ws.createServer((conn) => {
     switch (jsonMsg.cmd) {
       case SIGNAL_TYPE_JOIN:
         handleJoin(jsonMsg, conn)
+        break
       case SIGNAL_TYPE_LEAVE:
         handleLeave(jsonMsg, conn)
         break

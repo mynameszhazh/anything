@@ -72,7 +72,6 @@ export function handleLeave(message, conn) {
     for (let i in clients) {
       const remoteUid = clients[i].key
       if (remoteUid != uid) {
-        // 新的加入者
         let jsonMsg = {
           cmd: SIGNAL_TYPE_PEER_LEAVE,
           remoteUid: uid
@@ -85,6 +84,5 @@ export function handleLeave(message, conn) {
       }
     }
   }
-
   // 告诉自己离开成功了
 }
