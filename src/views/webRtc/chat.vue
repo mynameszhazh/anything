@@ -3,11 +3,22 @@
     <h1>xjh 视频聊天程序</h1>
     <div class="btns">
       <el-input v-model="roomId" placeholder="请输入房间id" />
-      <el-button id="joinBtn" ref="joinBtn" type="primary" @click="handleJoin">加入</el-button>
-      <el-button id="leaveBtn" ref="leaveBtn" type="danger" @click="handleLeave">离开</el-button>
+      <el-button id="joinBtn" ref="joinBtn" type="primary" @click="handleJoin"
+        >加入</el-button
+      >
+      <el-button id="leaveBtn" ref="leaveBtn" type="danger" @click="handleLeave"
+        >离开</el-button
+      >
     </div>
-    <div class="videos" ref='videos'>
-      <video id="localVideo" ref="localVideo" muted controls autoplay playsinline></video>
+    <div class="videos" ref="videos">
+      <video
+        id="localVideo"
+        ref="localVideo"
+        muted
+        controls
+        autoplay
+        playsinline
+      ></video>
       <video id="remoteVideo" ref="remoteVideo" autoplay playsinline></video>
     </div>
   </div>
@@ -15,18 +26,18 @@
 
 <script>
 import { ZeroRTCEngine } from './utils/index'
-import { SIGNAL_TYPE_JOIN, localUserId } from './const/index'
+import { SIGNAL_TYPE_JOIN, localUserId, SIGNAL_TYPE_LEAVE } from './const/index'
 export default {
   data() {
     return {
       roomId: '',
       localVideo: null,
       localStream: null,
-      zeroRTCEngine: null,
+      zeroRTCEngine: null
     }
   },
   created() {
-    this.initWebSocket();
+    this.initWebSocket()
   },
   methods: {
     initWebSocket() {
@@ -35,7 +46,7 @@ export default {
       this.zeroRTCEngine.createWebsocket()
     },
     handleJoin() {
-      if(!this.roomId) return
+      if (!this.roomId) return
       let contrains = {
         audio: true,
         video: true
@@ -44,11 +55,19 @@ export default {
         .getUserMedia(contrains)
         .then(this.handleJoinSuccess)
         .catch(this.handleJoinError)
-
     },
     dojoin(roomId) {
       const jsonMsg = {
         cmd: SIGNAL_TYPE_JOIN,
+        roomId: roomId,
+        uid: localUserId
+      }
+      const message = JSON.stringify(jsonMsg)
+      this.zeroRTCEngine.sendMessage(message)
+    },
+    doleave() {
+      const jsonMsg = {
+        cmd: SIGNAL_TYPE_LEAVE,
         roomId: roomId,
         uid: localUserId
       }
@@ -69,12 +88,13 @@ export default {
       console.error('errrrr', err)
     },
     handleLeave() {
+      console.log('handleLeave 处理房间离开')
+      this.doleave()
       if (this.localVideo) {
         this.localVideo.srcObject = null
         this.localStream = null
       }
     }
-
   }
 }
 </script>

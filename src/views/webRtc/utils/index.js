@@ -1,3 +1,6 @@
+import { SIGNAL_TYPE_NEW_PEER, SIGNAL_TYPE_RESP_JOIN } from '../const/index.js'
+import { handleRemoteNewPeer, handleResponseJoin } from '../control/index.js'
+
 let zeroRTCEngine = null
 /**
  * wsUrl: websocket 的地址
@@ -32,7 +35,7 @@ export class ZeroRTCEngine {
   }
 
   sendMessage(message) {
-    console.log('message class', message)
+    console.log('send msg', message)
     this.signling.send(message)
   }
 
@@ -43,7 +46,18 @@ export class ZeroRTCEngine {
     console.log('onOpen')
   }
   onMessage(event) {
-    console.log('onMessage', event)
+    console.log('onMessage', event.data)
+    var jsonMsg = JSON.parse(event.data)
+    switch (jsoeMsg.cmd) {
+      case SIGNAL_TYPE_NEW_PEER:
+        handleRemoteNewPeer(jsonMsg)
+        break
+      case SIGNAL_TYPE_RESP_JOIN:
+        handleResponseJoin(jsonMsg)
+        break
+      default:
+        break
+    }
   }
   onError(err) {
     console.error('onError', err)

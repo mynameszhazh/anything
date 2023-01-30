@@ -56,6 +56,10 @@ export class ZeroRTCMap {
     }
     return -1
   }
+
+  getEntry() {
+    return this._entrys
+  } 
 }
 
 export class Client {

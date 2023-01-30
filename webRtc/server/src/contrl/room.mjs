@@ -29,7 +29,7 @@ export function handleJoin(message, conn) {
   if (roomMap.size() > 1) {
     let clients = roomMap.getEntry()
     for (let i in clients) {
-      const remoteUid = client[i].key
+      const remoteUid = clients[i].key
       if (remoteUid != uid) {
         // 新的加入者
         let jsonMsg = {
