@@ -30,7 +30,8 @@ export default {
   },
   methods: {
     initWebSocket() {
-      this.zeroRTCEngine = new ZeroRTCEngine('ws://175.24.179.131:8010')
+      // this.zeroRTCEngine = new ZeroRTCEngine('ws://175.24.179.131:8010')
+      this.zeroRTCEngine = new ZeroRTCEngine('ws://localhost:8010')
       this.zeroRTCEngine.createWebsocket()
     },
     handleJoin() {
@@ -55,6 +56,7 @@ export default {
       this.zeroRTCEngine.sendMessage(message)
     },
     handleJoinSuccess(stream) {
+      console.log('handleJoinSuccess 加入房间client 成功')
       // 获取成功加入到 房间里面去
       this.dojoin(this.roomId)
 

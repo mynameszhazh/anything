@@ -32,6 +32,7 @@ export class ZeroRTCEngine {
   }
 
   sendMessage(message) {
+    console.log('message class', message)
     this.signling.send(message)
   }
 
