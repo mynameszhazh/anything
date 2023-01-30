@@ -1,5 +1,6 @@
 import {
   SIGNAL_TYPE_NEW_PEER,
+  SIGNAL_TYPE_PEER_LEAVE,
   SIGNAL_TYPE_RESP_JOIN
 } from '../constant/index.mjs'
 import { ZeroRTCMap, Client } from '../utils/index.mjs'
@@ -50,4 +51,40 @@ export function handleJoin(message, conn) {
       }
     }
   }
+}
+
+export function handleLeave(message, conn) {
+  const roomId = message.roomId
+  const uid = message.uid
+
+  console.info('uid' + uid + 'try to leave room' + roomId)
+  var roomMap = roomTableMap.get(roomId)
+  if (roomMap == null) {
+    console.info('房间是空的')
+    return
+  }
+  // 这个
+  roomMap.remove(uid)
+
+  // 房间还剩下其它人
+  if (roomMap.size() === 1) {
+    let clients = roomMap.getEntry()
+    for (let i in clients) {
+      const remoteUid = clients[i].key
+      if (remoteUid != uid) {
+        // 新的加入者
+        let jsonMsg = {
+          cmd: SIGNAL_TYPE_PEER_LEAVE,
+          remoteUid: uid
+        }
+        let msg = JSON.stringify(jsonMsg)
+        const remoteClient = roomMap.get(remoteUid)
+        if (remoteClient) {
+          remoteClient.conn.sendText(msg)
+        }
+      }
+    }
+  }
+
+  // 告诉自己离开成功了
 }

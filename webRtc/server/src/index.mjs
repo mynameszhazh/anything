@@ -1,6 +1,6 @@
 import ws from 'nodejs-websocket'
-import { SIGNAL_TYPE_JOIN } from './constant/index.mjs'
-import { handleJoin } from './contrl/room.mjs'
+import { SIGNAL_TYPE_JOIN, SIGNAL_TYPE_LEAVE } from './constant/index.mjs'
+import { handleJoin, handleLeave } from './contrl/room.mjs'
 const port = 8010
 
 const server = ws.createServer((conn) => {
@@ -13,6 +13,8 @@ const server = ws.createServer((conn) => {
     switch (jsonMsg.cmd) {
       case SIGNAL_TYPE_JOIN:
         handleJoin(jsonMsg, conn)
+      case SIGNAL_TYPE_LEAVE:
+        handleLeave(jsonMsg, conn)
         break
     }
   })

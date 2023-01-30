@@ -12,6 +12,7 @@
     </div>
     <div class="videos" ref="videos">
       <video
+        style="margin: 20px;"
         id="localVideo"
         ref="localVideo"
         muted
@@ -19,7 +20,15 @@
         autoplay
         playsinline
       ></video>
-      <video id="remoteVideo" ref="remoteVideo" autoplay playsinline></video>
+      <video
+        style="margin: 20px;"
+        id="remoteVideo"
+        ref="remoteVideo"
+        muted
+        controls
+        autoplay
+        playsinline
+      ></video>
     </div>
   </div>
 </template>
@@ -33,6 +42,8 @@ export default {
       roomId: '',
       localVideo: null,
       localStream: null,
+      remoteVideo: null,
+      remoteStream: null,
       zeroRTCEngine: null
     }
   },

@@ -3,5 +3,10 @@ export function handleRemoteNewPeer(msg) {
 }
 
 export function handleResponseJoin(msg) {
-  console.log(handleResponseJoin)
+  console.log('handleResponseJoin')
+}
+
+// 需要状态共享(vuex)
+export function handleRemotePeerLeave() {
+  console.log('handleRemotePeerLeave')
 }
