@@ -6,4 +6,3 @@ export const SIGNAL_TYPE_PEER_LEAVE = 'peer-leave'
 export const SIGNAL_TYPE_OFFER = 'offer'
 export const SIGNAL_TYPE_ANSWER = 'answer'
 export const SIGNAL_TYPE_CANDIDATE = 'candidate'
-
