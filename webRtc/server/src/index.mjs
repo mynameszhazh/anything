@@ -1,6 +1,6 @@
-const ws = require('nodejs-websocket')
-const { SIGNAL_TYPE_JOIN } = require('./constant')
-const { handleJoin } = require('./contrl/room')
+import ws from 'nodejs-websocket'
+import { SIGNAL_TYPE_JOIN } from './constant/index.mjs'
+import { handleJoin } from './contrl/room.mjs'
 const port = 8010
 
 const server = ws.createServer((conn) => {

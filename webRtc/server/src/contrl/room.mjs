@@ -1,5 +1,5 @@
-import { SIGNAL_TYPE_NEW_PEER, SIGNAL_TYPE_RESP_JOIN } from '../constant'
-import { ZeroRTCMap, Client } from '../utils'
+import { SIGNAL_TYPE_NEW_PEER, SIGNAL_TYPE_RESP_JOIN } from '../constant/index.mjs'
+import { ZeroRTCMap, Client } from '../utils/index.mjs'
 
 const roomTableMap = new ZeroRTCMap()
 
