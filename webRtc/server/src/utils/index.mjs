@@ -46,7 +46,7 @@ export class ZeroRTCMap {
     return this._entrys.length
   }
 
-  _getIndex() {
+  _getIndex(key) {
     if (key == null || key == undefined) return -1
     const _length = this._entrys.length
     for (let i = 0; i < _length; i++) {
