@@ -34,27 +34,34 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { ZeroRTCEngine } from './utils/index'
 import { SIGNAL_TYPE_JOIN, localUserId, SIGNAL_TYPE_LEAVE } from './const/index'
 export default {
   data() {
     return {
-      roomId: '',
-      localVideo: null,
-      localStream: null,
-      remoteVideo: null,
-      remoteStream: null,
-      zeroRTCEngine: null
+      roomId: ''
     }
+  },
+  computed: {
+    ...mapState('chat', {
+      localVideo: 'localVideo',
+      localStream: 'localStream',
+      remoteVideo: 'remoteVideo',
+      zeroRTCEngine: 'zeroRTCEngine',
+      remoteStream: 'remoteStream'
+    })
   },
   created() {
     this.initWebSocket()
   },
+  mounted () {
+  },
   methods: {
     initWebSocket() {
-      // this.zeroRTCEngine = new ZeroRTCEngine('ws://175.24.179.131:8010')
-      this.zeroRTCEngine = new ZeroRTCEngine('ws://localhost:8010')
-      this.zeroRTCEngine.createWebsocket()
+      // this.zeroRTCEngine = new ZeroRTCEngine('ws://175.24.179.131:8010') 
+      this.$store.dispatch('chat/setZeroRtc', new ZeroRTCEngine('ws://localhost:8010'))
+      this.zeroRTCEngine.createWebsocket();
     },
     handleJoin() {
       if (!this.roomId) return
@@ -73,6 +80,7 @@ export default {
         roomId: roomId,
         uid: localUserId
       }
+      this.$store.dispatch('chat/setRoomId', roomId)
       const message = JSON.stringify(jsonMsg)
       this.zeroRTCEngine.sendMessage(message)
     },
@@ -90,10 +98,12 @@ export default {
       // 获取成功加入到 房间里面去
       this.dojoin(this.roomId)
 
-      this.localVideo = this.$refs.localVideo
-      // console.log(this.$refs.joinBtn, this.$refs.videos, 'V')
+      this.$store.dispatch('chat/setLocalVideo', this.$refs.localVideo)
+      // 这里同时将远程的video 加入 vuex
+      this.$store.dispatch('chat/setRemoteVideo', this.$refs.remoteVideo)
+
       this.localVideo.srcObject = stream
-      this.localStream = stream
+      this.$store.dispatch('chat/setLocalStream', stream)
     },
     handleJoinError(err) {
       console.error('errrrr', err)
@@ -103,7 +113,7 @@ export default {
       this.doleave(this.roomId)
       if (this.localVideo) {
         this.localVideo.srcObject = null
-        this.localStream = null
+        this.$store.dispatch('chat/setLocalStream', null)
       }
     }
   }

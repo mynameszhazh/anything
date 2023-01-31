@@ -1,12 +1,18 @@
 import {
+  SIGNAL_TYPE_ANSWER,
+  SIGNAL_TYPE_CANDIDATE,
   SIGNAL_TYPE_NEW_PEER,
+  SIGNAL_TYPE_OFFER,
   SIGNAL_TYPE_PEER_LEAVE,
   SIGNAL_TYPE_RESP_JOIN
 } from '../const/index.js'
 import {
   handleRemoteNewPeer,
   handleRemotePeerLeave,
-  handleResponseJoin
+  handleResponseJoin,
+  handleRemoteCandidate,
+  handleRemoteOffer,
+  handleRemoteAnswer
 } from '../control/index.js'
 
 let zeroRTCEngine = null
@@ -65,6 +71,15 @@ export class ZeroRTCEngine {
         break
       case SIGNAL_TYPE_PEER_LEAVE:
         handleRemotePeerLeave(jsonMsg)
+        break
+      case SIGNAL_TYPE_OFFER:
+        handleRemoteOffer(jsonMsg)
+        break
+      case SIGNAL_TYPE_ANSWER:
+        handleRemoteAnswer(jsonMsg)
+        break
+      case SIGNAL_TYPE_CANDIDATE:
+        handleRemoteCandidate(jsonMsg)
         break
       default:
         break
