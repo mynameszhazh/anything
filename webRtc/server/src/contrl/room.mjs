@@ -86,3 +86,84 @@ export function handleLeave(message, conn) {
   }
   // 告诉自己离开成功了
 }
+
+export function handleOffer(message, conn) {
+  const roomId = message.roomId
+  const uid = message.uid
+  const remoteUid = message.remoteUid
+
+  console.info('uid' + uid + 'try to handle offer' + roomId)
+  var roomMap = roomTableMap.get(roomId)
+  if (roomMap == null) {
+    console.info('房间是空的')
+    return
+  }
+
+  if (roomMap.get(uid) == null) {
+    console.error('handleoffer can find then roomId', roomId)
+    return
+  }
+
+  // 向远程发送
+  var remoteClient = roomMap.get(remoteUid)
+  if (remoteClient) {
+    var msg = JSON.stringify(message)
+    remoteClient.conn.sendText(msg)
+  } else {
+    console.error("can't find remoteUid: " + remoteUid)
+  }
+}
+
+export function handleAnswer(message, conn) {
+  const roomId = message.roomId
+  const uid = message.uid
+  const remoteUid = message.remoteUid
+
+  console.info('uid' + uid + 'try to handle Answe' + roomId)
+  var roomMap = roomTableMap.get(roomId)
+  if (roomMap == null) {
+    console.info('房间是空的')
+    return
+  }
+
+  if (roomMap.get(uid) == null) {
+    console.error('handleAnswe can find then roomId', roomId)
+    return
+  }
+
+  // 向远程发送
+  var remoteClient = roomMap.get(remoteUid)
+  if (remoteClient) {
+    var msg = JSON.stringify(message)
+    remoteClient.conn.sendText(msg)
+  } else {
+    console.error("can't find remoteUid: " + remoteUid)
+  }
+}
+
+export function handleCandidate(message, conn) {
+  const roomId = message.roomId
+  const uid = message.uid
+  const remoteUid = message.remoteUid
+
+  console.info('uid' + uid + 'try to handle Candidate' + roomId)
+  var roomMap = roomTableMap.get(roomId)
+  if (roomMap == null) {
+    console.info('房间是空的')
+    return
+  }
+
+  if (roomMap.get(uid) == null) {
+    console.error('handleCandidate can find then roomId', roomId)
+    return
+  }
+
+  // 向远程发送
+  var remoteClient = roomMap.get(remoteUid)
+  if (remoteClient) {
+    var msg = JSON.stringify(message)
+    remoteClient.conn.sendText(msg)
+  } else {
+    console.error("can't find remoteUid: " + remoteUid)
+  }
+}
