@@ -20,7 +20,7 @@ export function handleJoin(message, conn) {
 
   if (roomMap.size() >= 2) {
     console.error('roomid' + roomId + '已经有两个人存在, 请使用其它房间')
-    return
+    return null
   }
 
   const client = new Client(uid, conn, roomId)
@@ -51,6 +51,8 @@ export function handleJoin(message, conn) {
       }
     }
   }
+
+  return client
 }
 
 export function handleLeave(message, conn) {
@@ -60,7 +62,7 @@ export function handleLeave(message, conn) {
   console.info('uid' + uid + 'try to leave room' + roomId)
   var roomMap = roomTableMap.get(roomId)
   if (roomMap == null) {
-    console.info('房间是空的')
+    console.info('handleLeave 房间是空的')
     return
   }
   // 这个
@@ -92,15 +94,17 @@ export function handleOffer(message, conn) {
   const uid = message.uid
   const remoteUid = message.remoteUid
 
-  console.info('uid' + uid + 'try to handle offer' + roomId)
+  console.info(
+    `handleOffer -> roomid: ${roomId} -> uid ${uid} -> remoteUid: ${remoteUid}`
+  )
   var roomMap = roomTableMap.get(roomId)
   if (roomMap == null) {
-    console.info('房间是空的')
+    console.info('handleOffer 房间是空的')
     return
   }
 
   if (roomMap.get(uid) == null) {
-    console.error('handleoffer can find then roomId', roomId)
+    console.error(uid + '不在房间内', roomId)
     return
   }
 
@@ -110,7 +114,7 @@ export function handleOffer(message, conn) {
     var msg = JSON.stringify(message)
     remoteClient.conn.sendText(msg)
   } else {
-    console.error("can't find remoteUid: " + remoteUid)
+    console.error('发送offer to remoteUid: ' + remoteUid)
   }
 }
 
@@ -119,10 +123,12 @@ export function handleAnswer(message, conn) {
   const uid = message.uid
   const remoteUid = message.remoteUid
 
-  console.info('uid' + uid + 'try to handle Answe' + roomId)
+  console.info(
+    `handleAnswer -> roomid: ${roomId} -> uid ${uid} -> remoteUid: ${remoteUid}`
+  )
   var roomMap = roomTableMap.get(roomId)
   if (roomMap == null) {
-    console.info('房间是空的')
+    console.info('handleAnswer 房间是空的')
     return
   }
 
@@ -137,7 +143,7 @@ export function handleAnswer(message, conn) {
     var msg = JSON.stringify(message)
     remoteClient.conn.sendText(msg)
   } else {
-    console.error("can't find remoteUid: " + remoteUid)
+    console.error("answer can't find remoteUid: " + remoteUid)
   }
 }
 
@@ -146,10 +152,12 @@ export function handleCandidate(message, conn) {
   const uid = message.uid
   const remoteUid = message.remoteUid
 
-  console.info('uid' + uid + 'try to handle Candidate' + roomId)
+  console.info(
+    `handleCandidate -> roomid: ${roomId} -> uid ${uid} -> remoteUid: ${remoteUid}`
+  )
   var roomMap = roomTableMap.get(roomId)
   if (roomMap == null) {
-    console.info('房间是空的')
+    console.info('handleCandidate 房间是空的')
     return
   }
 
@@ -164,6 +172,45 @@ export function handleCandidate(message, conn) {
     var msg = JSON.stringify(message)
     remoteClient.conn.sendText(msg)
   } else {
-    console.error("can't find remoteUid: " + remoteUid)
+    console.error("candidate can't find remoteUid: " + remoteUid)
   }
+}
+
+export function handleForceLeave(client) {
+    var roomId = client.roomId;
+    var uid = client.uid;
+
+    // 1. 先查找房间号
+    var roomMap = roomTableMap.get(roomId);
+    if (roomMap == null) {
+        console.warn("handleForceLeave can't find then roomId " + roomId);
+        return;
+    }
+
+    // 2. 判别uid是否在房间
+    if (!roomMap.contains(uid)) {
+        console.info("uid: " + uid +" have leave roomId " + roomId);
+        return;
+    }
+
+    // 3.走到这一步，说明客户端没有正常离开，所以我们要执行离开程序
+    console.info("uid: " + uid + " force leave room " + roomId);
+
+    roomMap.remove(uid);        // 删除发送者
+    if(roomMap.size() >= 1) {
+        var clients = roomMap.getEntrys();
+        for(var i in clients) {
+            var jsonMsg = {
+                'cmd': 'peer-leave',
+                'remoteUid': uid // 谁离开就填写谁
+            };
+            var msg = JSON.stringify(jsonMsg);
+            var remoteUid = clients[i].key;
+            var remoteClient = roomMap.get(remoteUid);
+            if(remoteClient) {
+                console.info("notify peer:" + remoteClient.uid + ", uid:" + uid + " leave");
+                remoteClient.conn.sendText(msg);
+            }
+        }
+    }
 }

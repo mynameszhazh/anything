@@ -36,7 +36,7 @@
 <script>
 import { mapState } from 'vuex'
 import { ZeroRTCEngine } from './utils/index'
-import { SIGNAL_TYPE_JOIN, localUserId, SIGNAL_TYPE_LEAVE } from './const/index'
+import {dojoin, doleave} from './control/index'
 export default {
   data() {
     return {
@@ -60,7 +60,8 @@ export default {
   methods: {
     initWebSocket() {
       // this.zeroRTCEngine = new ZeroRTCEngine('ws://175.24.179.131:8010') 
-      this.$store.dispatch('chat/setZeroRtc', new ZeroRTCEngine('ws://localhost:8010'))
+      // this.$store.dispatch('chat/setZeroRtc', new ZeroRTCEngine('ws://localhost:8010'))
+      this.$store.dispatch('chat/setZeroRtc', new ZeroRTCEngine('ws://175.24.179.131:8010'))
       this.zeroRTCEngine.createWebsocket();
     },
     handleJoin() {
@@ -73,30 +74,11 @@ export default {
         .getUserMedia(contrains)
         .then(this.handleJoinSuccess)
         .catch(this.handleJoinError)
-    },
-    dojoin(roomId) {
-      const jsonMsg = {
-        cmd: SIGNAL_TYPE_JOIN,
-        roomId: roomId,
-        uid: localUserId
-      }
-      this.$store.dispatch('chat/setRoomId', roomId)
-      const message = JSON.stringify(jsonMsg)
-      this.zeroRTCEngine.sendMessage(message)
-    },
-    doleave(roomId) {
-      const jsonMsg = {
-        cmd: SIGNAL_TYPE_LEAVE,
-        roomId: roomId,
-        uid: localUserId
-      }
-      const message = JSON.stringify(jsonMsg)
-      this.zeroRTCEngine.sendMessage(message)
-    },
+    }, 
     handleJoinSuccess(stream) {
-      console.log('handleJoinSuccess 加入房间client 成功')
+      console.log('handleJoinSuccess 摄像头打开成功')
       // 获取成功加入到 房间里面去
-      this.dojoin(this.roomId)
+      dojoin(this.roomId)
 
       this.$store.dispatch('chat/setLocalVideo', this.$refs.localVideo)
       // 这里同时将远程的video 加入 vuex
@@ -110,7 +92,7 @@ export default {
     },
     handleLeave() {
       console.log('handleLeave 处理房间离开')
-      this.doleave(this.roomId)
+      doleave(this.roomId)
       if (this.localVideo) {
         this.localVideo.srcObject = null
         this.$store.dispatch('chat/setLocalStream', null)

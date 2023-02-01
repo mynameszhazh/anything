@@ -49,7 +49,7 @@ export class ZeroRTCEngine {
   }
 
   sendMessage(message) {
-    console.log('send msg', message)
+    // console.log('send msg', message)
     this.signling.send(message)
   }
 
@@ -57,10 +57,10 @@ export class ZeroRTCEngine {
    * websocket数据的监听
    */
   onOpen() {
-    console.log('onOpen')
+    console.log('onOpen 服务器连接成功')
   }
   onMessage(event) {
-    console.log('onMessage', event.data)
+    // console.log('onMessage', event.data)
     var jsonMsg = JSON.parse(event.data)
     switch (jsonMsg.cmd) {
       case SIGNAL_TYPE_NEW_PEER:
@@ -86,9 +86,9 @@ export class ZeroRTCEngine {
     }
   }
   onError(err) {
-    console.error('onError', err)
+    console.error('onError 服务器异常')
   }
   onClose(event) {
-    console.log('onClose', event)
+    console.log('onClose 服务器关闭')
   }
 }

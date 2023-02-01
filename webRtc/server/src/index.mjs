@@ -11,24 +11,25 @@ import {
   handleLeave,
   handleOffer,
   handleAnswer,
-  handleCandidate
+  handleCandidate,
+  handleForceLeave
 } from './contrl/room.mjs'
 const port = 8010
 
 const server = ws.createServer((conn) => {
   console.log('创建一个连接-----------')
-
+  conn.client = null
   conn.on('text', function(str) {
-    console.log('revn msg:' + str)
+    // console.log('revn msg:' + str)
     const jsonMsg = JSON.parse(str)
 
     switch (jsonMsg.cmd) {
       case SIGNAL_TYPE_JOIN:
-        handleJoin(jsonMsg, conn)
+        conn.client = handleJoin(jsonMsg, conn)
         break
       case SIGNAL_TYPE_LEAVE:
         handleLeave(jsonMsg, conn)
-        breaK
+        break
       case SIGNAL_TYPE_OFFER:
         handleOffer(jsonMsg, conn)
         break
@@ -42,6 +43,10 @@ const server = ws.createServer((conn) => {
   })
   conn.on('close', function(code, reason) {
     console.log('close code:' + code, 'close reason:' + reason)
+    if (conn.client != null) {
+      // 强制让客户端从房间退出
+      handleForceLeave(conn.client)
+    }
   })
   conn.on('error', function(err) {
     console.log('error msr:')
