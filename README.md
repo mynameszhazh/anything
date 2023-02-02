@@ -31,4 +31,24 @@
   - 注意里面存在一些服务器 跨域的操作
     - `proxy_pass` 的一些基本操作
 
+### 证书 + 配置
+
+- 生成证书文件
+
+```
+mkdir -p ~/cert
+cd ~/cert
+# CA 私钥
+openssl genrsa -out key.pem 2048
+# 自签名证书
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095
+```
+
+- 配置到 nginx 配置文件中去
+
+```
+// include
+// ssh 等配置合并 处理
+```
+
 ## extra
