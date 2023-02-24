@@ -1,40 +1,92 @@
 <template>
-  <div class="box">
-    <!-- <Children></Children> -->
-    <!-- <button @click="onclick">changefoo</button> -->
-    <input aria-label="input" value="1333"/>
-  </div>
+  <div class="box"></div>
 </template>
 
 <script>
-import { getXJHInfo } from "../../api/test/mock";
-import Children from "./chilren/index.vue";
 export default {
   provide() {
-    return {
-      list: this.xjhList,
-      foo: "test, foo",
-    };
+    return {}
   },
   data() {
     return {
-      name: "123",
-      xjhList: [],
-    };
-  },
-  async created() {
-    this.xjhList = await getXJHInfo();
-  },
-  components: {
-    Children,
-  },
-  methods: {
-    onclick() {
-      console.log('change')
-      this.foo = 'change test.foo' 
+      plays: {
+        hamlet: { name: 'Hamlet', type: 'tragedy' },
+        'as-like': { name: 'As You Like It', type: 'comedy' },
+        othello: { name: 'Othello', type: 'tragedy' }
+      },
+      invoices: [
+        {
+          customer: 'BigCo',
+          performances: [
+            {
+              playID: 'hamlet',
+              audience: 55
+            },
+            {
+              playID: 'as-like',
+              audience: 35
+            },
+            {
+              playID: 'othello',
+              audience: 40
+            }
+          ]
+        }
+      ]
     }
   },
-};
+  created() {
+    let ret = this.statement(this.invoices[0], this.plays)
+    console.log(ret)
+  },
+  components: {},
+  methods: {
+    statement(invoice, plays) {
+      let totalAmount = 0
+      let volumeCredits = 0
+      let result = `Statement for ${invoice.customer}\n`
+      const format = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2
+      }).format
+      for (let perf of invoice.performances) {
+        const play = plays[perf.playID]
+        let thisAmount = 0
+        switch (play.type) {
+          case 'tragedy':
+            thisAmount = 40000
+            if (perf.audience > 30) {
+              thisAmount += 1000 * (perf.audience - 30)
+            }
+            break
+          case 'comedy':
+            thisAmount = 30000
+            if (perf.audience > 20) {
+              thisAmount += 10000 + 500 * (perf.audience - 20)
+            }
+            thisAmount += 300 * perf.audience
+            break
+          default:
+            throw new Error(`unknown type: ${play.type}`)
+        }
+        // add volume credits
+        volumeCredits += Math.max(perf.audience - 30, 0)
+        // add extra credit for every ten comedy attendees
+        if ('comedy' === play.type)
+          volumeCredits += Math.floor(perf.audience / 5)
+        // print line for this order
+        result += ` ${play.name}: ${format(thisAmount / 100)} (${
+          perf.audience
+        } seats)\n`
+        totalAmount += thisAmount
+      }
+      result += `Amount owed is ${format(totalAmount / 100)}\n`
+      result += `You earned ${volumeCredits} credits\n`
+      return result
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
