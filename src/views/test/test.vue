@@ -89,11 +89,11 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<!-- <style lang="less" scoped>
 .box {
   color: red;
   .text {
     color: yellow;
   }
 }
-</style>
+</style> -->

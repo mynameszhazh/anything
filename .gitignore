@@ -2,6 +2,7 @@
 node_modules
 /dist
 */static
+__snapshots__
 
 # local env files
 .env.local
