@@ -27,6 +27,7 @@ describe('happy path', () => {
       ]
     }
   ]
+  
   test('statement 函数重构', () => {
     expect(statement(invoices[0], plays)).toMatchSnapshot();
   });
