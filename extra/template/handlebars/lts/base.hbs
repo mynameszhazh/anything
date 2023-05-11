@@ -36,8 +36,8 @@
     <el-card>
       <Buttons :button-list="operationButton" @buttonEvent="buttonEvent" />
       <CommonTable ref="userTable" style="margin-top: 10px" :loading="loading" :config="tableHead"
-        :common_content="tableData" @selectionChange="handleSelectionChange" @currentPageChange="currentPageChange"
-        @currentSizeChange="currentSizeChange">
+        :common_content="tableData" @selectionChange="handleSelectionChange" @currentPageChange="handleCurrentChange"
+        @currentSizeChange="handleSizeChange">
         {{#each schema}}
         {{#if isSlot}}
         <span slot="{{prop}}" slot-scope="{ row }">
