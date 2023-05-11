@@ -3,7 +3,7 @@ const fs = require('fs')
 const Handlebars = require('handlebars')
 var myHandlebars = Handlebars.create({
   // 修改插值符号
-  delimiters: ['${{', '}}']
+  delimiters: ['{{', '}}']
 })
 
 myHandlebars.registerHelper('equal', function (v1, v2, options) {

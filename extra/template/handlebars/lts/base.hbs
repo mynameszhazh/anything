@@ -59,7 +59,7 @@
         {{#equal type 'input'}}
         <el-form-item label="{{name}}" prop="{{prop}}">
           <el-input v-if="!isView" v-model="formData.{{prop}}" placeholder="请输入{{name}}" clearable
-            class="formItemStyle" @keyup.enter.native="search(1)" />
+            class="formItemStyle" />
           <template v-else>
             <div class="formItemStyle">
               \{{ formData.{{prop}} }}
@@ -83,7 +83,7 @@
         {{#equal type 'number'}}
         <el-form-item label="{{name}}" prop="{{prop}}">
           <el-input v-if="!isView" v-model.number="formData.{{prop}}" placeholder="请输入{{name}}" clearable
-            class="formItemStyle" @keyup.enter.native="search(1)" />
+            class="formItemStyle" />
           <template v-else>
             <div class="formItemStyle">
               \{{ formData.{{prop}} }}
