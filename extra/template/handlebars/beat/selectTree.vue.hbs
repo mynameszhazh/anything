@@ -17,7 +17,7 @@
             <el-option v-for="(item, index) of {{dictName}}" :key="index" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
-        {{/equal}}
+        {{/equal}} 
         {{#equal type 'textarea'}}
         <el-form-item label="{{name}}" prop="{{prop}}">
           <el-input v-model="searchData.{{prop}}" type="textarea" placeholder="请输入{{name}}" clearable class="formItemStyle"
@@ -41,7 +41,7 @@
         {{#each schema}}
         {{#if isSlot}}
         <span slot="{{prop}}" slot-scope="{ row }">
-          \{{ getDict({{dictName}}, row.{{prop}}) }}
+          \{{rgetDict({{dictName}}, row.{{prop}}) }}
         </span>
         {{/if}}
         {{/each}}
@@ -80,6 +80,42 @@
           </template>
         </el-form-item>
         {{/equal}}
+        {{#equal type 'selectTree'}}
+        <el-form-item label="{{name}}" prop="{{prop}}">
+          <el-select
+            v-if="!isView"
+            ref="selectTree"
+            :value="getDict({{dictName}}, formData.{{prop}})"
+            class="formItemStyle"
+            placeholder="请选择{{name}}"
+            clearable
+          >
+            <el-option
+              v-for="item in {{ dictName }}"
+              :key="item.code"
+              :label="item.name"
+              :value="item.id"
+              style="display: none"
+            />
+            <el-tree
+              ref="selecteltree"
+              :data="{{dictName}}"
+              node-key="id"
+              highlight-current
+              :props="defaultProps"
+              :current-node-key="formData.pid"
+              :expand-on-click-node="true"
+              default-expand-all
+              @node-click="handleNodeClick"
+            />
+          </el-select>
+          <template v-else>
+            <div class="formItemStyle">
+              \{{ formData.{{prop}} }}
+            </div>
+          </template>
+        </el-form-item>
+        {{/equal}}
         {{#equal type 'number'}}
         <el-form-item label="{{name}}" prop="{{prop}}">
           <el-input v-if="!isView" v-model.number="formData.{{prop}}" placeholder="请输入{{name}}" clearable
@@ -110,6 +146,11 @@
     mixins: [buttonMixin, calcTableHeightMixin],
     data() {
       return {
+        defaultProps: {
+          children: 'children',
+          label: 'name',
+          disabled: 'disabled'
+        },
         tableHead: {
           hide_order: true,
           attrs: {
@@ -184,6 +225,10 @@
       this.operationButton = this.$u.getButtons(['{{apiCodes.add}}', '{{apiCodes.del}}'])
     },
     methods: {
+      handleNodeClick(node) {
+        // this.$set(this.formData, 'xzqh', node.id.trim())
+        this.$refs.selectTree.blur()
+      },
       async getDictData() {
         {{#each dictArr}}
         this.{{name}} = await this.$u.getTree("{{code}}")
