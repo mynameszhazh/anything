@@ -1,0 +1,320 @@
+<template>
+  <div class="app-container">
+    <el-card>
+      <el-form ref="queryForm" :inline="true" :model="searchData" size="small" label-width="68px">
+        {{#each schema}}
+        {{#if search.show}}
+        {{#equal type 'input'}}
+        <el-form-item label="{{name}}" prop="{{prop}}">
+          <el-input v-model="searchData.{{prop}}" placeholder="请输入{{name}}" clearable class="formItemStyle"
+            @keyup.enter.native="search(1)" />
+        </el-form-item>
+        {{/equal}}
+        {{#equal type 'select'}}
+        <el-form-item label="{{name}}" prop="{{prop}}">
+          <el-select v-if="!isView" v-model="searchData.{{prop}}" class="formItemStyle" clearable
+            placeholder="{{name}}">
+            <el-option v-for="(item, index) of {{dictName}}" :key="index" :label="item.name" :value="item.id" />
+          </el-select>
+        </el-form-item>
+        {{/equal}}
+        {{#equal type 'textarea'}}
+        <el-form-item label="{{name}}" prop="{{prop}}">
+          <el-input v-model="searchData.{{prop}}" type="textarea" placeholder="请输入{{name}}" clearable class="formItemStyle"
+            @keyup.enter.native="search(1)" />
+        </el-form-item>
+        {{/equal}}
+        {{/if}}
+        {{/each}}
+        <el-form-item>
+          <el-button type="cyan" icon="el-icon-search" @click="search(1)">搜索</el-button>
+          <el-button icon="el-icon-refresh" @click="resetSearch">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+    <div class="cart-distance"></div>
+    <el-card>
+      <Buttons :button-list="operationButton" @buttonEvent="buttonEvent" />
+      <CommonTable ref="userTable" style="margin-top: 10px" :loading="loading" :config="tableHead"
+        :common_content="tableData" @selectionChange="handleSelectionChange" @currentPageChange="handleCurrentChange"
+        @currentSizeChange="handleSizeChange">
+        {{#each schema}}
+        {{#if isSlot}}
+        <span slot="{{prop}}" slot-scope="{ row }">
+          \{{ getDict({{dictName}}, row.{{prop}}) }}
+        </span>
+        {{/if}}
+        {{/each}}
+        <template slot="details" slot-scope="{ row }">
+          <span v-for="(item, index) in tableOperationButton" :key="index" class="handler"
+            @click="clickButton(row, item)">\{{ item.name }}</span>
+        </template>
+      </CommonTable>
+    </el-card>
+    <el-dialog :close-on-click-modal="false" :visible.sync="dialogFormVisible" :title="dialogTitle"
+      @close="closeDialog">
+      <el-form ref="form" :inline="true" size="small" :model="formData" :label-position="labelPosition"
+        :label-width="formLabelWidth" :rules="rules">
+        {{#each schema}}
+        {{#equal type 'input'}}
+        <el-form-item label="{{name}}" prop="{{prop}}">
+          <el-input v-if="!isView" v-model="formData.{{prop}}" placeholder="请输入{{name}}" clearable
+            class="formItemStyle" />
+          <template v-else>
+            <div class="formItemStyle">
+              \{{ formData.{{prop}} }}
+            </div>
+          </template>
+        </el-form-item>
+        {{/equal}}
+        {{#equal type 'select'}}
+        <el-form-item label="{{name}}" prop="{{prop}}">
+          <el-select v-if="!isView" v-model="formData.{{prop}}" class="formItemStyle" clearable
+            placeholder="{{name}}">
+            <el-option v-for="(item, index) of {{dictName}}" :key="index" :label="item.name" :value="item.id" />
+          </el-select>
+          <template v-else>
+            <div class="formItemStyle">
+              \{{ formData.{{prop}} }}
+            </div>
+          </template>
+        </el-form-item>
+        {{/equal}}
+        {{#equal type 'number'}}
+        <el-form-item label="{{name}}" prop="{{prop}}">
+          <el-input v-if="!isView" v-model.number="formData.{{prop}}" placeholder="请输入{{name}}" clearable
+            class="formItemStyle" />
+          <template v-else>
+            <div class="formItemStyle">
+              \{{ formData.{{prop}} }}
+            </div>
+          </template>
+        </el-form-item>
+        {{/equal}}
+        {{/each}}
+
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="onCancel">取 消</el-button>
+        <el-button v-if="!isView" type="primary" :loading="submitLoding" @click="onSubmit">确 定</el-button>
+      </span>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+  import { buttonMixin, calcTableHeightMixin } from '@/mixins/index'
+  import { getDict } from '@/utils/index.js'
+
+  export default {
+    mixins: [buttonMixin, calcTableHeightMixin],
+    data() {
+      return {
+        tableHead: {
+          hide_order: true,
+          attrs: {
+            height: 'calc(100vh - 240px)',
+            'header-cell-style': { background: '#fafafa', color: '#101010' },
+            border: true,
+            'row-key': this.getRowKeys
+          },
+          props: [
+            {{#each schema}}
+            {
+              label: '{{name}}',
+              prop: '{{prop}}',
+              attrs: {
+                align: 'center',
+                'show-overflow-tooltip': true
+              }
+            },
+            {{/each}}
+          ]
+        },
+        getDict,
+        formData: {
+          usabled: 0
+        },
+        rules: {
+          {{#each schema}}
+          {{#equal type 'input'}}
+          {{prop}}: [
+            { required: true, message: '请输入{{name}}', trigger: 'blur' },
+            {
+              max: 64,
+              message: '{{name}}不能超过64个字符',
+              trigger: 'blur'
+            },
+          ],
+          {{/equal}}
+          {{#equal type 'select'}}
+          {{prop}}: [
+            { required: true, message: '请选择{{name}}', trigger: 'change' },
+          ],
+          {{/equal}}
+          {{#equal type 'number'}}
+          {{prop}}: [
+            { required: true, message: '请输入{{name}}', trigger: 'blur' }
+          ],
+          {{/equal}}
+          {{#equal type 'textarea'}}
+          {{prop}}: [
+            {
+              max: 512,
+              message: '{{prop}}不能超过512个字符',
+              trigger: 'blur'
+            }
+          ],
+          {{/equal}}
+          {{/each}}
+        },
+        operationButton: [],
+        // 字典数据
+        {{#each dictArr}}
+        {{name}}: [],
+        {{/each}}
+      }
+    },
+    async created() {
+      // this.search()
+      this.getDictData() 
+    },
+    mounted() {
+      // this.tableOperationButton = this.$u.getButtons(['{{apiCodes.edit}}', '{{apiCodes.view}}'])
+      this.tableOperationButton = [
+       {{#each tabBtn}}
+         {
+          code: 'USER_EDIT',
+          // icon: 'iconfont icon-edit',
+          method: '{{method}}',
+          name: '{{name}}',
+          requestType: 'post',
+          type: '3',
+          upload: false,
+          url: '/platform/user/update'
+        },
+        {{/each}}
+      ]
+      // this.operationButton = this.$u.getButtons(['{{apiCodes.add}}', '{{apiCodes.del}}'])
+      this.operationButton = [
+       {{#each opeBtn}}
+         {
+          code: 'USER_EDIT',
+          // icon: 'iconfont icon-edit',
+          method: '{{method}}',
+          name: '{{name}}',
+          requestType: 'post',
+          type: '3',
+          upload: false,
+          url: '/platform/user/update'
+        },
+        {{/each}}
+      ]
+    },
+    methods: {
+      {{#each tabBtn}}
+      {{method}}() {
+          console.log('{{method}}')
+      },
+      {{/each}}
+      {{#each opeBtn}}
+      {{method}}() {
+          console.log('{{method}}')
+      },
+      {{/each}}
+      async getDictData() {
+        {{#each dictArr}}
+        this.{{name}} = await this.$u.getConstDict("{{code}}")
+        {{/each}}
+      },
+      // 搜索
+      search(current) {
+        const flag = true
+      if (flag) return
+        if (current) {
+          this.pagination.current = current
+        }
+        this.loading = true
+        const { url, requestType } = this.$u.getButtons("{{apiCodes.search}}")[0]
+        this.$service({
+          url,
+          method: requestType,
+          data: {
+            ...this.searchData,
+            current: this.pagination.current,
+            size: this.pagination.size
+          }
+        })
+          .then(({ success, data, message }) => {
+            if (success) {
+              if (this.pagination.current !== 1 && data.records.length === 0) {
+                this.pagination.current--
+                this.$refs.userTable.setPageCurrent(this.pagination.current)
+                this.search()
+              } else {
+                this.tableData = data.records
+                this.$refs.userTable.page.size = data.size
+                this.$refs.userTable.setPageTotal(data.total)
+                this.loading = false
+              }
+            }
+          })
+          .catch(() => {
+            this.loading = false
+          })
+      },
+      currentPageChange(page) {
+        if (this.pagination.current === page) return
+        this.pagination.current = page
+        this.search()
+      },
+      currentSizeChange(size) {
+        this.pagination.size = size
+        this.search(1)
+      },
+      // 表单提交
+      onSubmit() {
+        this.$refs.form.validate((valid) => {
+          if (valid) {
+            this.submitLoding = true
+            this.$service({
+              url: this.dialogUrl,
+              method: this.requestType,
+              data: {
+                ...this.formData
+              }
+            })
+              .then(({ success, data, message }) => {
+                if (success) {
+                  this.$message({
+                    message: message,
+                    type: 'success'
+                  })
+                  this.search()
+                  this.submitLoding = false
+                  this.dialogFormVisible = false
+                }
+              })
+              .catch(() => {
+                this.submitLoding = false
+              })
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
+      },
+      // 关闭弹框
+      closeDialog() {
+        this.resetForm()
+      },
+      resetForm() {
+        this.$refs.form && this.$refs.form.resetFields()
+        this.formData = {
+          usabled: 0
+        }
+      }
+    }
+  }
+</script>
+<style lang="scss" scoped></style>

@@ -2,8 +2,12 @@
   <div class="app-container">
     <el-card>
       <el-form ref="queryForm" :inline="true" :model="searchData" size="small" label-width="68px">
-        <el-form-item label="用户id" prop="yhid">
-          <el-input v-model="searchData.yhid" placeholder="请输入用户id" clearable class="formItemStyle"
+        <el-form-item label="设备名称" prop="sbmc">
+          <el-input v-model="searchData.sbmc" placeholder="请输入设备名称" clearable class="formItemStyle"
+            @keyup.enter.native="search(1)" />
+        </el-form-item>
+        <el-form-item label="设备编号" prop="sbbh">
+          <el-input v-model="searchData.sbbh" placeholder="请输入设备编号" clearable class="formItemStyle"
             @keyup.enter.native="search(1)" />
         </el-form-item>
         <el-form-item>
@@ -16,8 +20,8 @@
     <el-card>
       <Buttons :button-list="operationButton" @buttonEvent="buttonEvent" />
       <CommonTable ref="userTable" style="margin-top: 10px" :loading="loading" :config="tableHead"
-        :common_content="tableData" @selectionChange="handleSelectionChange" @currentPageChange="currentPageChange"
-        @currentSizeChange="currentSizeChange">
+        :common_content="tableData" @selectionChange="handleSelectionChange" @currentPageChange="handleCurrentChange"
+        @currentSizeChange="handleSizeChange">
         <template slot="details" slot-scope="{ row }">
           <span v-for="(item, index) in tableOperationButton" :key="index" class="handler"
             @click="clickButton(row, item)">{{ item.name }}</span>
@@ -28,30 +32,75 @@
       @close="closeDialog">
       <el-form ref="form" :inline="true" size="small" :model="formData" :label-position="labelPosition"
         :label-width="formLabelWidth" :rules="rules">
-        <el-form-item label="用户id" prop="yhid">
-          <el-input v-if="!isView" v-model="formData.yhid" placeholder="请输入用户id" clearable
-            class="formItemStyle" @keyup.enter.native="search(1)" />
+        <el-form-item label="设备名称" prop="sbmc">
+          <el-input v-if="!isView" v-model="formData.sbmc" placeholder="请输入设备名称" clearable
+            class="formItemStyle" />
           <template v-else>
             <div class="formItemStyle">
-              {{ formData.yhid }}
+              {{ formData.sbmc }}
             </div>
           </template>
         </el-form-item>
-        <el-form-item label="权益次数" prop="qycs">
-          <el-input v-if="!isView" v-model.number="formData.qycs" placeholder="请输入权益次数" clearable
-            class="formItemStyle" @keyup.enter.native="search(1)" />
+        <el-form-item label="设备编号" prop="sbbh">
+          <el-input v-if="!isView" v-model="formData.sbbh" placeholder="请输入设备编号" clearable
+            class="formItemStyle" />
           <template v-else>
             <div class="formItemStyle">
-              {{ formData.qycs }}
+              {{ formData.sbbh }}
             </div>
           </template>
         </el-form-item>
-        <el-form-item label="用户权益" prop="yhqx">
-          <el-input v-if="!isView" v-model="formData.yhqx" placeholder="请输入用户权益" clearable
-            class="formItemStyle" @keyup.enter.native="search(1)" />
+        <el-form-item label="生成商" prop="scs">
+          <el-input v-if="!isView" v-model="formData.scs" placeholder="请输入生成商" clearable
+            class="formItemStyle" />
           <template v-else>
             <div class="formItemStyle">
-              {{ formData.yhqx }}
+              {{ formData.scs }}
+            </div>
+          </template>
+        </el-form-item>
+        <el-form-item label="检测项目" prop="jcxm">
+          <el-input v-if="!isView" v-model="formData.jcxm" placeholder="请输入检测项目" clearable
+            class="formItemStyle" />
+          <template v-else>
+            <div class="formItemStyle">
+              {{ formData.jcxm }}
+            </div>
+          </template>
+        </el-form-item>
+        <el-form-item label="使用日期" prop="syrq">
+          <el-input v-if="!isView" v-model="formData.syrq" placeholder="请输入使用日期" clearable
+            class="formItemStyle" />
+          <template v-else>
+            <div class="formItemStyle">
+              {{ formData.syrq }}
+            </div>
+          </template>
+        </el-form-item>
+        <el-form-item label="使用频率" prop="syps">
+          <el-input v-if="!isView" v-model="formData.syps" placeholder="请输入使用频率" clearable
+            class="formItemStyle" />
+          <template v-else>
+            <div class="formItemStyle">
+              {{ formData.syps }}
+            </div>
+          </template>
+        </el-form-item>
+        <el-form-item label="所属科室" prop="ssks">
+          <el-input v-if="!isView" v-model="formData.ssks" placeholder="请输入所属科室" clearable
+            class="formItemStyle" />
+          <template v-else>
+            <div class="formItemStyle">
+              {{ formData.ssks }}
+            </div>
+          </template>
+        </el-form-item>
+        <el-form-item label="科室负责人" prop="ksfzr">
+          <el-input v-if="!isView" v-model="formData.ksfzr" placeholder="请输入科室负责人" clearable
+            class="formItemStyle" />
+          <template v-else>
+            <div class="formItemStyle">
+              {{ formData.ksfzr }}
             </div>
           </template>
         </el-form-item>
@@ -83,24 +132,64 @@
           },
           props: [
             {
-              label: '用户id',
-              prop: 'yhid',
+              label: '设备名称',
+              prop: 'sbmc',
               attrs: {
                 align: 'center',
                 'show-overflow-tooltip': true
               }
             },
             {
-              label: '权益次数',
-              prop: 'qycs',
+              label: '设备编号',
+              prop: 'sbbh',
               attrs: {
                 align: 'center',
                 'show-overflow-tooltip': true
               }
             },
             {
-              label: '用户权益',
-              prop: 'yhqx',
+              label: '生成商',
+              prop: 'scs',
+              attrs: {
+                align: 'center',
+                'show-overflow-tooltip': true
+              }
+            },
+            {
+              label: '检测项目',
+              prop: 'jcxm',
+              attrs: {
+                align: 'center',
+                'show-overflow-tooltip': true
+              }
+            },
+            {
+              label: '使用日期',
+              prop: 'syrq',
+              attrs: {
+                align: 'center',
+                'show-overflow-tooltip': true
+              }
+            },
+            {
+              label: '使用频率',
+              prop: 'syps',
+              attrs: {
+                align: 'center',
+                'show-overflow-tooltip': true
+              }
+            },
+            {
+              label: '所属科室',
+              prop: 'ssks',
+              attrs: {
+                align: 'center',
+                'show-overflow-tooltip': true
+              }
+            },
+            {
+              label: '科室负责人',
+              prop: 'ksfzr',
               attrs: {
                 align: 'center',
                 'show-overflow-tooltip': true
@@ -113,22 +202,67 @@
           usabled: 0
         },
         rules: {
-          yhid: [
-            { required: true, message: '请输入用户id', trigger: 'blur' },
+          sbmc: [
+            { required: true, message: '请输入设备名称', trigger: 'blur' },
             {
               max: 64,
-              message: '用户id不能超过64个字符',
+              message: '设备名称不能超过64个字符',
               trigger: 'blur'
             },
           ],
-          qycs: [
-            { required: true, message: '请输入权益次数', trigger: 'blur' }
-          ],
-          yhqx: [
-            { required: true, message: '请输入用户权益', trigger: 'blur' },
+          sbbh: [
+            { required: true, message: '请输入设备编号', trigger: 'blur' },
             {
               max: 64,
-              message: '用户权益不能超过64个字符',
+              message: '设备编号不能超过64个字符',
+              trigger: 'blur'
+            },
+          ],
+          scs: [
+            { required: true, message: '请输入生成商', trigger: 'blur' },
+            {
+              max: 64,
+              message: '生成商不能超过64个字符',
+              trigger: 'blur'
+            },
+          ],
+          jcxm: [
+            { required: true, message: '请输入检测项目', trigger: 'blur' },
+            {
+              max: 64,
+              message: '检测项目不能超过64个字符',
+              trigger: 'blur'
+            },
+          ],
+          syrq: [
+            { required: true, message: '请输入使用日期', trigger: 'blur' },
+            {
+              max: 64,
+              message: '使用日期不能超过64个字符',
+              trigger: 'blur'
+            },
+          ],
+          syps: [
+            { required: true, message: '请输入使用频率', trigger: 'blur' },
+            {
+              max: 64,
+              message: '使用频率不能超过64个字符',
+              trigger: 'blur'
+            },
+          ],
+          ssks: [
+            { required: true, message: '请输入所属科室', trigger: 'blur' },
+            {
+              max: 64,
+              message: '所属科室不能超过64个字符',
+              trigger: 'blur'
+            },
+          ],
+          ksfzr: [
+            { required: true, message: '请输入科室负责人', trigger: 'blur' },
+            {
+              max: 64,
+              message: '科室负责人不能超过64个字符',
               trigger: 'blur'
             },
           ],
@@ -138,23 +272,42 @@
       }
     },
     async created() {
-      this.search()
+      // this.search()
       this.getDictData() 
     },
     mounted() {
-      this.tableOperationButton = this.$u.getButtons(['CONSUMER_RIGHT_EDIT', 'CONSUMER_RIGHT_VIEW'])
-      this.operationButton = this.$u.getButtons(['CONSUMER_RIGHT_ADD', 'CONSUMER_RIGHT_DEL'])
+      // this.tableOperationButton = this.$u.getButtons(['APPRAISE_EDIT', 'APPRAISE_VIEW'])
+      this.tableOperationButton = [
+         {
+          code: 'USER_EDIT',
+          // icon: 'iconfont icon-edit',
+          method: 'view',
+          name: '详情',
+          requestType: 'post',
+          type: '3',
+          upload: false,
+          url: '/platform/user/update'
+        },
+      ]
+      // this.operationButton = this.$u.getButtons(['APPRAISE_ADD', 'APPRAISE_DEL'])
+      this.operationButton = [
+      ]
     },
     methods: {
+      view() {
+          console.log('view')
+      },
       async getDictData() {
       },
       // 搜索
       search(current) {
+        const flag = true
+      if (flag) return
         if (current) {
           this.pagination.current = current
         }
         this.loading = true
-        const { url, requestType } = this.$u.getButtons("CONSUMER_RIGHT_SEARCH")[0]
+        const { url, requestType } = this.$u.getButtons("APPRAISE_SEARCH")[0]
         this.$service({
           url,
           method: requestType,
