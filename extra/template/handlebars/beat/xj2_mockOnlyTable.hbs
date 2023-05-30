@@ -1,0 +1,159 @@
+<template>
+  <div class="">
+    <Buttons :button-list="operationButton" @buttonEvent="buttonEvent" />
+    <CommonTable ref="userTable" style="margin-top: 10px" :loading="loading" :config="tableHead" 
+      :common_content="tableData" no_page @selectionChange="handleSelectionChange" @currentPageChange="handleCurrentChange"  
+      @currentSizeChange="handleSizeChange">
+      {{#each schema}}
+      {{#if isSlot}}
+      <span slot="{{prop}}" slot-scope="{ row }">
+        \{{ getDict({{dictName}}, row.{{prop}}) }}
+      </span>
+      {{/if}}
+      {{/each}}
+      <template slot="details" slot-scope="{ row }">
+        <span v-for="(item, index) in tableOperationButton" :key="index" class="handler"
+          @click="clickButton(row, item)">\{{ item.name }}</span>
+      </template>
+    </CommonTable>
+  </div>
+</template>
+
+<script>
+  import { buttonMixin } from '@/mixins/index'
+  import { getDict } from '@/utils/index.js'
+
+  export default {
+    mixins: [buttonMixin],
+    data() {
+      return {
+        tableHead: {
+          hide_order: true,
+          attrs: {
+            height: '100%',
+            'header-cell-style': { background: '#fafafa', color: '#101010' },
+            border: true,
+            'row-key': this.getRowKeys
+          },
+          props: [
+            {{#each schema}}
+            {
+              label: '{{name}}',
+              prop: '{{prop}}',
+              attrs: {
+                align: 'center',
+                'show-overflow-tooltip': true
+              }
+            },
+            {{/each}}
+          ]
+        },
+        getDict,
+        operationButton: [],
+        // 字典数据
+        {{#each dictArr}}
+        {{name}}: [],
+        {{/each}}
+      }
+    },
+    async created() {
+      // this.search()
+      this.getDictData() 
+    },
+    mounted() {
+      // this.tableOperationButton = this.$u.getButtons(['{{apiCodes.edit}}', '{{apiCodes.view}}'])
+      this.tableOperationButton = [
+       {{#each tabBtn}}
+         {
+          code: 'USER_EDIT',
+          // icon: 'iconfont icon-edit',
+          method: '{{method}}',
+          name: '{{name}}',
+          requestType: 'post',
+          type: '3',
+          upload: false,
+          url: '/platform/user/update'
+        },
+        {{/each}}
+      ]
+      // this.operationButton = this.$u.getButtons(['{{apiCodes.add}}', '{{apiCodes.del}}'])
+      this.operationButton = [
+       {{#each opeBtn}}
+         {
+          code: 'USER_EDIT',
+          // icon: 'iconfont icon-edit',
+          method: '{{method}}',
+          name: '{{name}}',
+          requestType: 'post',
+          type: '3',
+          upload: false,
+          url: '/platform/user/update'
+        },
+        {{/each}}
+      ]
+    },
+    methods: {
+      {{#each tabBtn}}
+      {{method}}() {
+          console.log('{{method}}')
+      },
+      {{/each}}
+      {{#each opeBtn}}
+      {{method}}() {
+          console.log('{{method}}')
+      },
+      {{/each}}
+      async getDictData() {
+        {{#each dictArr}}
+        this.{{name}} = await this.$u.getConstDict("{{code}}")
+        {{/each}}
+      },
+      // 搜索
+      search(current) {
+        const flag = true
+      if (flag) return
+        if (current) {
+          this.pagination.current = current
+        }
+        this.loading = true
+        const { url, requestType } = this.$u.getButtons("{{apiCodes.search}}")[0]
+        this.$service({
+          url,
+          method: requestType,
+          data: {
+            ...this.searchData,
+            current: this.pagination.current,
+            size: this.pagination.size
+          }
+        })
+          .then(({ success, data, message }) => {
+            if (success) {
+              if (this.pagination.current !== 1 && data.records.length === 0) {
+                this.pagination.current--
+                this.$refs.userTable.setPageCurrent(this.pagination.current)
+                this.search()
+              } else {
+                this.tableData = data.records
+                this.$refs.userTable.page.size = data.size
+                this.$refs.userTable.setPageTotal(data.total)
+                this.loading = false
+              }
+            }
+          })
+          .catch(() => {
+            this.loading = false
+          })
+      },
+      currentPageChange(page) {
+        if (this.pagination.current === page) return
+        this.pagination.current = page
+        this.search()
+      },
+      currentSizeChange(size) {
+        this.pagination.size = size
+        this.search(1)
+      }
+    }
+  }
+</script>
+<style lang="scss" scoped></style>

@@ -1,6 +1,20 @@
 # handlebars 使用
 
+## quick copy
+
+```js
+type: 'select',
+dictName: 'YHJB',
+```
+
+```js
+search: {
+  show: true
+}
+```
+
 ## schemas
+
 ```js
 const { compilerFn } = require('./core.js')
 const schemas = [
@@ -20,10 +34,10 @@ const schemas = [
   },
   {
     type: 'select',
+    dictName: 'YHJB',
     name: '用户级别',
     isSlot: true,
     prop: 'yhjb',
-    dictName: 'YHJB',
     search: {
       show: true
     }
@@ -57,16 +71,18 @@ const schemas = [
 compilerFn(
   {
     schema: schemas,
-    dictArr: [{
-      name: 'YHJB',
-      code: '114_USER_LEVEL',
-    }],
+    dictArr: [
+      {
+        name: 'YHJB',
+        code: '114_USER_LEVEL'
+      }
+    ],
     apiCodes: {
-      search: '114_USER_SEARCH' ,
-      del: "114_USER_DEL" ,
-      add: '114_USER_ADD' ,
-      edit: '114_USER_EDIT' ,
-      view: '114_USER_VIEW' ,
+      search: '114_USER_SEARCH',
+      del: '114_USER_DEL',
+      add: '114_USER_ADD',
+      edit: '114_USER_EDIT',
+      view: '114_USER_VIEW'
     }
   },
   './index.vue',
