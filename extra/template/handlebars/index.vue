@@ -1,4 +1,6 @@
 <template>
+23.12KB
+
   <div class="app-container">
     <el-card>
       <el-form ref="queryForm" :inline="true" :model="searchData" size="small" label-width="68px">
