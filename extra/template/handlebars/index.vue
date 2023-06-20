@@ -2,12 +2,8 @@
   <div class="app-container">
     <el-card>
       <el-form ref="queryForm" :inline="true" :model="searchData" size="small" label-width="68px">
-        <el-form-item label="仪器名称" prop="yqmc">
-          <el-input v-model="searchData.yqmc" placeholder="请输入仪器名称" clearable class="formItemStyle"
-            @keyup.enter.native="search(1)" />
-        </el-form-item>
-        <el-form-item label="编号" prop="bh">
-          <el-input v-model="searchData.bh" placeholder="请输入编号" clearable class="formItemStyle"
+        <el-form-item label="报警内容" prop="alarmPriority">
+          <el-input v-model="searchData.alarmPriority" placeholder="请输入报警内容" clearable class="formItemStyle"
             @keyup.enter.native="search(1)" />
         </el-form-item>
         <el-form-item>
@@ -32,165 +28,48 @@
       @close="closeDialog">
       <el-form ref="form" :inline="true" size="small" :model="formData" :label-position="labelPosition"
         :label-width="formLabelWidth" :rules="rules">
-        <el-form-item label="序号" prop="xh">
-          <el-input v-if="!isView" v-model="formData.xh" placeholder="请输入序号" clearable
+        <el-form-item label="报警时间" prop="startTime">
+          <el-input v-if="!isView" v-model="formData.startTime" placeholder="请输入报警时间" clearable
             class="formItemStyle" />
           <template v-else>
             <div class="formItemStyle">
-              {{ formData.xh }}
+              {{ formData.startTime }}
             </div>
           </template>
         </el-form-item>
-        <el-form-item label="仪器名称" prop="yqmc">
-          <el-input v-if="!isView" v-model="formData.yqmc" placeholder="请输入仪器名称" clearable
+        <el-form-item label="报警设备" prop="deviceId">
+          <el-input v-if="!isView" v-model="formData.deviceId" placeholder="请输入报警设备" clearable
             class="formItemStyle" />
           <template v-else>
             <div class="formItemStyle">
-              {{ formData.yqmc }}
+              {{ formData.deviceId }}
             </div>
           </template>
         </el-form-item>
-        <el-form-item label="型号规格" prop="xhgg">
-          <el-input v-if="!isView" v-model="formData.xhgg" placeholder="请输入型号规格" clearable
+        <el-form-item label="报警类型" prop="alarmType">
+          <el-input v-if="!isView" v-model="formData.alarmType" placeholder="请输入报警类型" clearable
             class="formItemStyle" />
           <template v-else>
             <div class="formItemStyle">
-              {{ formData.xhgg }}
+              {{ formData.alarmType }}
             </div>
           </template>
         </el-form-item>
-        <el-form-item label="使用次数" prop="sycs">
-          <el-input v-if="!isView" v-model="formData.sycs" placeholder="请输入使用次数" clearable
+        <el-form-item label="报警内容" prop="alarmPriority">
+          <el-input v-if="!isView" v-model="formData.alarmPriority" placeholder="请输入报警内容" clearable
             class="formItemStyle" />
           <template v-else>
             <div class="formItemStyle">
-              {{ formData.sycs }}
+              {{ formData.alarmPriority }}
             </div>
           </template>
         </el-form-item>
-        <el-form-item label="使用日期" prop="syrq">
-          <el-input v-if="!isView" v-model="formData.syrq" placeholder="请输入使用日期" clearable
+        <el-form-item label="操作" prop="details">
+          <el-input v-if="!isView" v-model="formData.details" placeholder="请输入操作" clearable
             class="formItemStyle" />
           <template v-else>
             <div class="formItemStyle">
-              {{ formData.syrq }}
-            </div>
-          </template>
-        </el-form-item>
-        <el-form-item label="测量范围" prop="clfw">
-          <el-input v-if="!isView" v-model="formData.clfw" placeholder="请输入测量范围" clearable
-            class="formItemStyle" />
-          <template v-else>
-            <div class="formItemStyle">
-              {{ formData.clfw }}
-            </div>
-          </template>
-        </el-form-item>
-        <el-form-item label="生产厂家" prop="sccj">
-          <el-input v-if="!isView" v-model="formData.sccj" placeholder="请输入生产厂家" clearable
-            class="formItemStyle" />
-          <template v-else>
-            <div class="formItemStyle">
-              {{ formData.sccj }}
-            </div>
-          </template>
-        </el-form-item>
-        <el-form-item label="编号" prop="bh">
-          <el-input v-if="!isView" v-model="formData.bh" placeholder="请输入编号" clearable
-            class="formItemStyle" />
-          <template v-else>
-            <div class="formItemStyle">
-              {{ formData.bh }}
-            </div>
-          </template>
-        </el-form-item>
-        <el-form-item label="出厂日期" prop="ccrq">
-          <el-input v-if="!isView" v-model="formData.ccrq" placeholder="请输入出厂日期" clearable
-            class="formItemStyle" />
-          <template v-else>
-            <div class="formItemStyle">
-              {{ formData.ccrq }}
-            </div>
-          </template>
-        </el-form-item>
-        <el-form-item label="状态" prop="zt">
-          <el-input v-if="!isView" v-model="formData.zt" placeholder="请输入状态" clearable
-            class="formItemStyle" />
-          <template v-else>
-            <div class="formItemStyle">
-              {{ formData.zt }}
-            </div>
-          </template>
-        </el-form-item>
-        <el-form-item label="溯源方式" prop="syfs">
-          <el-input v-if="!isView" v-model="formData.syfs" placeholder="请输入溯源方式" clearable
-            class="formItemStyle" />
-          <template v-else>
-            <div class="formItemStyle">
-              {{ formData.syfs }}
-            </div>
-          </template>
-        </el-form-item>
-        <el-form-item label="溯源单位" prop="sydw">
-          <el-input v-if="!isView" v-model="formData.sydw" placeholder="请输入溯源单位" clearable
-            class="formItemStyle" />
-          <template v-else>
-            <div class="formItemStyle">
-              {{ formData.sydw }}
-            </div>
-          </template>
-        </el-form-item>
-        <el-form-item label="校准日期" prop="xzrq">
-          <el-input v-if="!isView" v-model="formData.xzrq" placeholder="请输入校准日期" clearable
-            class="formItemStyle" />
-          <template v-else>
-            <div class="formItemStyle">
-              {{ formData.xzrq }}
-            </div>
-          </template>
-        </el-form-item>
-        <el-form-item label="有效日期" prop="yxrq">
-          <el-input v-if="!isView" v-model="formData.yxrq" placeholder="请输入有效日期" clearable
-            class="formItemStyle" />
-          <template v-else>
-            <div class="formItemStyle">
-              {{ formData.yxrq }}
-            </div>
-          </template>
-        </el-form-item>
-        <el-form-item label="确认结果" prop="qrjg">
-          <el-input v-if="!isView" v-model="formData.qrjg" placeholder="请输入确认结果" clearable
-            class="formItemStyle" />
-          <template v-else>
-            <div class="formItemStyle">
-              {{ formData.qrjg }}
-            </div>
-          </template>
-        </el-form-item>
-        <el-form-item label="存放地点" prop="cfdd">
-          <el-input v-if="!isView" v-model="formData.cfdd" placeholder="请输入存放地点" clearable
-            class="formItemStyle" />
-          <template v-else>
-            <div class="formItemStyle">
-              {{ formData.cfdd }}
-            </div>
-          </template>
-        </el-form-item>
-        <el-form-item label="备注" prop="bz">
-          <el-input v-if="!isView" v-model="formData.bz" placeholder="请输入备注" clearable
-            class="formItemStyle" />
-          <template v-else>
-            <div class="formItemStyle">
-              {{ formData.bz }}
-            </div>
-          </template>
-        </el-form-item>
-        <el-form-item label="计量要求" prop="jlyq">
-          <el-input v-if="!isView" v-model="formData.jlyq" placeholder="请输入计量要求" clearable
-            class="formItemStyle" />
-          <template v-else>
-            <div class="formItemStyle">
-              {{ formData.jlyq }}
+              {{ formData.details }}
             </div>
           </template>
         </el-form-item>
@@ -222,144 +101,40 @@
           },
           props: [
             {
-              label: '序号',
-              prop: 'xh',
+              label: '报警时间',
+              prop: 'startTime',
               attrs: {
                 align: 'center',
                 'show-overflow-tooltip': true
               }
             },
             {
-              label: '仪器名称',
-              prop: 'yqmc',
+              label: '报警设备',
+              prop: 'deviceId',
               attrs: {
                 align: 'center',
                 'show-overflow-tooltip': true
               }
             },
             {
-              label: '型号规格',
-              prop: 'xhgg',
+              label: '报警类型',
+              prop: 'alarmType',
               attrs: {
                 align: 'center',
                 'show-overflow-tooltip': true
               }
             },
             {
-              label: '使用次数',
-              prop: 'sycs',
+              label: '报警内容',
+              prop: 'alarmPriority',
               attrs: {
                 align: 'center',
                 'show-overflow-tooltip': true
               }
             },
             {
-              label: '使用日期',
-              prop: 'syrq',
-              attrs: {
-                align: 'center',
-                'show-overflow-tooltip': true
-              }
-            },
-            {
-              label: '测量范围',
-              prop: 'clfw',
-              attrs: {
-                align: 'center',
-                'show-overflow-tooltip': true
-              }
-            },
-            {
-              label: '生产厂家',
-              prop: 'sccj',
-              attrs: {
-                align: 'center',
-                'show-overflow-tooltip': true
-              }
-            },
-            {
-              label: '编号',
-              prop: 'bh',
-              attrs: {
-                align: 'center',
-                'show-overflow-tooltip': true
-              }
-            },
-            {
-              label: '出厂日期',
-              prop: 'ccrq',
-              attrs: {
-                align: 'center',
-                'show-overflow-tooltip': true
-              }
-            },
-            {
-              label: '状态',
-              prop: 'zt',
-              attrs: {
-                align: 'center',
-                'show-overflow-tooltip': true
-              }
-            },
-            {
-              label: '溯源方式',
-              prop: 'syfs',
-              attrs: {
-                align: 'center',
-                'show-overflow-tooltip': true
-              }
-            },
-            {
-              label: '溯源单位',
-              prop: 'sydw',
-              attrs: {
-                align: 'center',
-                'show-overflow-tooltip': true
-              }
-            },
-            {
-              label: '校准日期',
-              prop: 'xzrq',
-              attrs: {
-                align: 'center',
-                'show-overflow-tooltip': true
-              }
-            },
-            {
-              label: '有效日期',
-              prop: 'yxrq',
-              attrs: {
-                align: 'center',
-                'show-overflow-tooltip': true
-              }
-            },
-            {
-              label: '确认结果',
-              prop: 'qrjg',
-              attrs: {
-                align: 'center',
-                'show-overflow-tooltip': true
-              }
-            },
-            {
-              label: '存放地点',
-              prop: 'cfdd',
-              attrs: {
-                align: 'center',
-                'show-overflow-tooltip': true
-              }
-            },
-            {
-              label: '备注',
-              prop: 'bz',
-              attrs: {
-                align: 'center',
-                'show-overflow-tooltip': true
-              }
-            },
-            {
-              label: '计量要求',
-              prop: 'jlyq',
+              label: '操作',
+              prop: 'details',
               attrs: {
                 align: 'center',
                 'show-overflow-tooltip': true
@@ -372,147 +147,43 @@
           usabled: 0
         },
         rules: {
-          xh: [
-            { required: true, message: '请输入序号', trigger: 'blur' },
+          startTime: [
+            { required: true, message: '请输入报警时间', trigger: 'blur' },
             {
               max: 64,
-              message: '序号不能超过64个字符',
+              message: '报警时间不能超过64个字符',
               trigger: 'blur'
             },
           ],
-          yqmc: [
-            { required: true, message: '请输入仪器名称', trigger: 'blur' },
+          deviceId: [
+            { required: true, message: '请输入报警设备', trigger: 'blur' },
             {
               max: 64,
-              message: '仪器名称不能超过64个字符',
+              message: '报警设备不能超过64个字符',
               trigger: 'blur'
             },
           ],
-          xhgg: [
-            { required: true, message: '请输入型号规格', trigger: 'blur' },
+          alarmType: [
+            { required: true, message: '请输入报警类型', trigger: 'blur' },
             {
               max: 64,
-              message: '型号规格不能超过64个字符',
+              message: '报警类型不能超过64个字符',
               trigger: 'blur'
             },
           ],
-          sycs: [
-            { required: true, message: '请输入使用次数', trigger: 'blur' },
+          alarmPriority: [
+            { required: true, message: '请输入报警内容', trigger: 'blur' },
             {
               max: 64,
-              message: '使用次数不能超过64个字符',
+              message: '报警内容不能超过64个字符',
               trigger: 'blur'
             },
           ],
-          syrq: [
-            { required: true, message: '请输入使用日期', trigger: 'blur' },
+          details: [
+            { required: true, message: '请输入操作', trigger: 'blur' },
             {
               max: 64,
-              message: '使用日期不能超过64个字符',
-              trigger: 'blur'
-            },
-          ],
-          clfw: [
-            { required: true, message: '请输入测量范围', trigger: 'blur' },
-            {
-              max: 64,
-              message: '测量范围不能超过64个字符',
-              trigger: 'blur'
-            },
-          ],
-          sccj: [
-            { required: true, message: '请输入生产厂家', trigger: 'blur' },
-            {
-              max: 64,
-              message: '生产厂家不能超过64个字符',
-              trigger: 'blur'
-            },
-          ],
-          bh: [
-            { required: true, message: '请输入编号', trigger: 'blur' },
-            {
-              max: 64,
-              message: '编号不能超过64个字符',
-              trigger: 'blur'
-            },
-          ],
-          ccrq: [
-            { required: true, message: '请输入出厂日期', trigger: 'blur' },
-            {
-              max: 64,
-              message: '出厂日期不能超过64个字符',
-              trigger: 'blur'
-            },
-          ],
-          zt: [
-            { required: true, message: '请输入状态', trigger: 'blur' },
-            {
-              max: 64,
-              message: '状态不能超过64个字符',
-              trigger: 'blur'
-            },
-          ],
-          syfs: [
-            { required: true, message: '请输入溯源方式', trigger: 'blur' },
-            {
-              max: 64,
-              message: '溯源方式不能超过64个字符',
-              trigger: 'blur'
-            },
-          ],
-          sydw: [
-            { required: true, message: '请输入溯源单位', trigger: 'blur' },
-            {
-              max: 64,
-              message: '溯源单位不能超过64个字符',
-              trigger: 'blur'
-            },
-          ],
-          xzrq: [
-            { required: true, message: '请输入校准日期', trigger: 'blur' },
-            {
-              max: 64,
-              message: '校准日期不能超过64个字符',
-              trigger: 'blur'
-            },
-          ],
-          yxrq: [
-            { required: true, message: '请输入有效日期', trigger: 'blur' },
-            {
-              max: 64,
-              message: '有效日期不能超过64个字符',
-              trigger: 'blur'
-            },
-          ],
-          qrjg: [
-            { required: true, message: '请输入确认结果', trigger: 'blur' },
-            {
-              max: 64,
-              message: '确认结果不能超过64个字符',
-              trigger: 'blur'
-            },
-          ],
-          cfdd: [
-            { required: true, message: '请输入存放地点', trigger: 'blur' },
-            {
-              max: 64,
-              message: '存放地点不能超过64个字符',
-              trigger: 'blur'
-            },
-          ],
-          bz: [
-            { required: true, message: '请输入备注', trigger: 'blur' },
-            {
-              max: 64,
-              message: '备注不能超过64个字符',
-              trigger: 'blur'
-            },
-          ],
-          jlyq: [
-            { required: true, message: '请输入计量要求', trigger: 'blur' },
-            {
-              max: 64,
-              message: '计量要求不能超过64个字符',
+              message: '操作不能超过64个字符',
               trigger: 'blur'
             },
           ],
@@ -522,24 +193,18 @@
       }
     },
     async created() {
-      // this.search()
+      this.search()
       this.getDictData() 
     },
     mounted() {
-      // this.tableOperationButton = this.$u.getButtons(['APPRAISE_EDIT', 'APPRAISE_VIEW'])
-      this.tableOperationButton = [
-      ]
-      // this.operationButton = this.$u.getButtons(['APPRAISE_ADD', 'APPRAISE_DEL'])
-      this.operationButton = [
-      ]
+      this.tableOperationButton = this.$u.getButtons(['APPRAISE_EDIT', 'APPRAISE_VIEW'])
+      this.operationButton = this.$u.getButtons(['APPRAISE_ADD', 'APPRAISE_DEL'])
     },
     methods: {
       async getDictData() {
       },
       // 搜索
       search(current) {
-        const flag = true
-      if (flag) return
         if (current) {
           this.pagination.current = current
         }

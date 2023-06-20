@@ -2,93 +2,40 @@ const { compilerFn } = require('./core.js')
 
 const schemas = [
   {
-    name: '序号',
-    prop: 'xh'
+    name: '报警时间',
+    prop: 'startTime'
   },
   {
-    name: '仪器名称',
-    prop: 'yqmc',
+    name: '报警设备',
+    prop: 'deviceId'
+  },
+  {
+    name: '报警类型',
+    prop: 'alarmType'
+  },
+  {
+    name: '报警内容',
+    prop: 'alarmPriority',
     search: {
       show: true
     }
-  },
-  {
-    name: '型号规格',
-    prop: 'xhgg'
-  },
-  {
-    name: '使用次数',
-    prop: 'sycs'
-  },
-  {
-    name: '使用日期',
-    prop: 'syrq'
-  },
-  {
-    name: '测量范围',
-    prop: 'clfw'
-  },
-  {
-    name: '生产厂家',
-    prop: 'sccj'
-  },
-  {
-    name: '编号',
-    prop: 'bh',
-    search: {
-      show: true
-    }
-  },
-  {
-    name: '出厂日期',
-    prop: 'ccrq'
-  },
-  {
-    name: '状态',
-    prop: 'zt'
-  },
-  {
-    name: '溯源方式',
-    prop: 'syfs'
-  },
-  {
-    name: '溯源单位',
-    prop: 'sydw'
-  },
-  {
-    name: '校准日期',
-    prop: 'xzrq'
-  },
-  {
-    name: '有效日期',
-    prop: 'yxrq'
-  },
-  {
-    name: '确认结果',
-    prop: 'qrjg'
-  },
-  {
-    name: '存放地点',
-    prop: 'cfdd'
-  },
-  {
-    name: '备注',
-    prop: 'bz'
-  },
-  {
-    name: '计量要求',
-    prop: 'jlyq'
   }
 ]
+// 是否需要操作
+schemas.push({
+  name: '操作',
+  // name: '信用得分',
+  prop: 'details'
+})
 
 compilerFn(
   {
     schema: schemas,
     dictArr: [
       // {
-      //   name: 'JYLB',
-      //   code: 'JYLB'
-      // },
+      //   name: 'QYLX',
+      //   code: 'QYLX'
+      // }
       // {
       //   name: 'JYXZ',
       //   code: 'JYXZ'
@@ -120,9 +67,9 @@ compilerFn(
     ],
     opeBtn: [
       // {
-      //   name: '登记设备',
-      //   method: 'add'
-      // },
+      //   name: '登记',
+      //   method: 'register'
+      // }
       // {
       //   name: '删除设备',
       //   method: 'mockdel'
@@ -137,14 +84,14 @@ compilerFn(
       // }
     ],
     tabBtn: [
-      // {
-      //   name: '上传',
-      //   method: 'upload'
-      // },
-      // {
-      //   name: '编辑',
-      //   method: 'mockEdit'
-      // },
+      {
+        name: '上传',
+        method: 'upload'
+      },
+      {
+        name: '删除',
+        method: 'mockDel'
+      }
       // {
       //   name: '预览',
       //   method: 'mockView'
@@ -159,5 +106,7 @@ compilerFn(
     }
   },
   './index.vue',
-  './beat/xj2_mock.hbs'
+  './lts/base.hbs'
+  // './beat/xj2_mock.hbs'
+  // './beat/xj2_mockOnlyTable.hbs'
 )

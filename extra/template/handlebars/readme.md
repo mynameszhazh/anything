@@ -4,6 +4,7 @@
 
 ```js
 type: 'select',
+isSlot: true,
 dictName: 'YHJB',
 ```
 

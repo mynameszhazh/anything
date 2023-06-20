@@ -2,11 +2,11 @@ const { pinyin } = require('pinyin')
 const { exec } = require('child_process')
 const iconv = require('iconv-lite')
 const template =
-  '序号	仪器名称	型号规格	测量范围	生产厂家	编号	出厂日期	状态	溯源方式	溯源单位	校准日期	有效日期	确认结果	存放地点	备注	计量要求'
+  '申报文件 上传时间 上传情况'
 const arr = template
-  .split('\t')
+  // .split('\t')
   // .split('\n')
-  // .split(' ')
+  .split(' ')
   .filter((item) => item !== '')
   .map((item) => {
     return {

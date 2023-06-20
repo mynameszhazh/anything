@@ -2,25 +2,27 @@ const { pinyin } = require('pinyin')
 const { exec } = require('child_process')
 const iconv = require('iconv-lite')
 const template =
-  '序号	仪器名称	型号规格	测量范围	生产厂家	编号	出厂日期	状态	溯源方式	溯源单位	校准日期	有效日期	确认结果	存放地点	备注	计量要求'
+  '序号 企业名称 加工场所 企业负责人 职工人数 企业地址 法人代表 企业类型 信用得分'
 const data = `
-1	拉力试验机	AI-7000-LAU5	最大拉力：0-50kN	高铁检验仪器（东莞）有限公司	DG191203550	2020.4	在用	检定	自治区计量院	2022/3/26	2023/3/25	符合	棉花包装材料检验室（一楼）		GB/T1040.1-2018 5.1.1试验机应符合GB/T16825.1-2008
-2	拉力试验机	AI-7000-LAU5	速度精度：±0.5%	高铁检验仪器（东莞）有限公司	DG191203551	2020.4	在用	检定	自治区计量院	2022/3/26	2023/3/25	符合	棉花包装材料检验室		GB/T1040.1-2018 5.1.1试验机应符合GB/T16825.1-2008
+1 企业A 加工场所A 企业负责人A 20 企业地址A 法人代表A 1 96
 `
 const title = 'process2List'
-const arr = template.split('\t')
-// .split(' ')
+const arr = template
+  // .split('\t')
+  .split(' ')
 
 const dataArr = data
-  .split('\n')
   // .split('\n')
+  .split('\n')
   // .split(' ')
   .filter((item) => item !== '')
 
 let objArr = []
 for (let i = 0; i < dataArr.length; i++) {
   let obj = {}
-  let itemArr = dataArr[i].split('\t')
+  let itemArr = dataArr[i]
+    // .split('\t')
+    .split(' ')
   for (let k = 0; k < arr.length; k++) {
     obj[
       pinyin(arr[k], {
