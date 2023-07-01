@@ -15,17 +15,23 @@ module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? '/cart' : '/',
   productionSourceMap: true,
   devServer: {
-    before(app) {
-      // app 就是一个exporess实例
-      app.get('/api/courses', (req, res) => {
-        setTimeout(() => {
-          res.json([{ name: 'xjh1', age: 18 }, { name: 'xjh2', age: 181 }])
-        }, 1000);
-      })
+    // before(app) {
+    //   // app 就是一个exporess实例
+    //   app.get('/api/courses', (req, res) => {
+    //     setTimeout(() => {
+    //       res.json([{ name: 'xjh1', age: 18 }, { name: 'xjh2', age: 181 }])
+    //     }, 1000);
+    //   })
+    // },
+    // open: true,
+    // port: 8081,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        pathRewrite: { '^/api': '' },
+      },
     },
-    open: true,
-    port: 8081,
-    proxy: 'http://127.0.0.1:8080'
+
   },
   // chainWebpack: config => {
   //   // 只要使用这些模块,都会自动导入,我的 imports.scss 文件

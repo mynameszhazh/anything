@@ -223,6 +223,32 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/system",
+    name: "System",
+    component: () =>
+      import(
+        /* webpackChunkName: "Main" */ "../views/Layout.vue"
+      ),
+    children: [
+      {
+        path: "role",
+        name: "role",
+        component: () =>
+          import(
+            /* webpackChunkName: "Main" */ "../views/system/role/index.vue"
+          ),
+      },
+      {
+        path: "user",
+        name: "user",
+        component: () =>
+          import(
+            /* webpackChunkName: "Main" */ "../views/system/user/index.vue"
+          ),
+      },
+    ],
+  }
 ];
 
 export const routesMeaus = [];

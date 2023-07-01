@@ -7,11 +7,12 @@ import create from './utils/create';
 import createExtend from './utils/extend';
 import LazyLoad from './directive/lazyLoad';
 import ElementUI from 'element-ui';
+import server from './serve/index'
 import 'element-ui/lib/theme-chalk/index.css';
 
 /* PUBLIC */
 import './assets/styles/reset.min.css'
-import './assets/styles/basic.css' 
+import './assets/styles/basic.css'
 
 //  自定义指令 常规 
 Vue.use(directive)
@@ -24,6 +25,8 @@ Vue.use(LazyLoad, {
 })
 /* ElementUI */
 Vue.use(ElementUI)
+
+Vue.prototype.$http = server
 
 Vue.config.productionTip = false
 
