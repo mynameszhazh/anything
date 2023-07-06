@@ -65,19 +65,65 @@
       <el-form :inline="true" :model="formData" class="demo-form-inline">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="用户">
-              <el-input v-model="formData.name" placeholder="用户"></el-input>
+            <el-form-item label="用户名">
+              <el-input
+                v-model="formData.username"
+                placeholder="用户名"
+              ></el-input>
             </el-form-item>
           </el-col>
-          <!-- <el-col :span="12">
-            <el-form-item label="活动区域">
-              <el-select v-model="formData.region" placeholder="活动区域">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
+          <el-col :span="12">
+            <el-form-item label="姓名">
+              <el-input v-model="formData.name" placeholder="姓名"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item label="头像">
+          <!-- <el-input v-model="formData.name" placeholder="姓名"></el-input> -->
+          <!-- :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove" -->
+          <el-upload
+            action="https://jsonplaceholder.typicode.com/posts/"
+            list-type="picture-card"
+            :on-success="(file) => (formData.image = file)"
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
+        </el-form-item>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="性别">
+              <el-select v-model="formData.gender" placeholder="性别">
+                <el-option label="男" :value="1"></el-option>
+                <el-option label="女" :value="2"></el-option>
               </el-select>
             </el-form-item>
-          </el-col> -->
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="归属部门">
+              <el-select v-model="formData.deptId" placeholder="工作">
+                <el-option
+                  v-for="item of deptList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
         </el-row>
+        <el-form-item label="job">
+          <el-input v-model="formData.job" placeholder="job"></el-input>
+        </el-form-item>
+        <el-form-item label="entrydate">
+          <!--             value-format="yyyy-" -->
+          <el-date-picker
+            v-model="formData.entrydate"
+            type="date"
+            placeholder="选择日期时间"
+          >
+          </el-date-picker>
+        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
@@ -103,13 +149,23 @@ export default {
       },
       formData: {},
       tableData: [],
-      multipleSelection: []
+      multipleSelection: [],
+      deptList: []
     }
   },
   created() {
+    this.getDeptData()
     this.search()
   },
   methods: {
+    getDeptData() {
+      this.$http({
+        url: '/api/depts',
+        method: 'get'
+      }).then((res) => {
+        this.deptList = res.data
+      })
+    },
     search() {
       this.$http({
         url: '/api/user',
@@ -134,14 +190,26 @@ export default {
       this.formData = row
     },
     allDel() {
-      console.log('adddel')
-    },
-    del(row) {
-      console.log('del')
+      const ids = this.multipleSelection.map((item) => item.id).join(',')
       this.$confirm('是否删除这个', '删除')
         .then(() => {
           this.$http({
-            url: '/api/user/' + row.id,
+            url: '/api/user/delete/' + ids,
+            method: 'delete'
+          }).then((res) => {
+            this.search()
+            this.$message.success('删除成功')
+          })
+        })
+        .catch(() => {
+          this.$message.warning('取消了删除')
+        })
+    },
+    del(row) {
+      this.$confirm('是否删除这个', '删除')
+        .then(() => {
+          this.$http({
+            url: '/api/user/delete/' + row.id,
             method: 'delete'
           }).then((res) => {
             this.search()
