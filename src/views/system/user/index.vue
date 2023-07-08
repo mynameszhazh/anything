@@ -83,9 +83,9 @@
           <!-- :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove" -->
           <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="/api/upload"
             list-type="picture-card"
-            :on-success="(file) => (formData.image = file)"
+            :on-success="imgUploadSuccess"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
@@ -158,6 +158,9 @@ export default {
     this.search()
   },
   methods: {
+    imgUploadSuccess(file, data) {
+      console.log(file, data, 'imgUploadSuccess')
+    },
     getDeptData() {
       this.$http({
         url: '/api/depts',
