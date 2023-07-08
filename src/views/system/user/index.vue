@@ -85,6 +85,8 @@
           <el-upload
             action="/api/upload"
             list-type="picture-card"
+            name="image"
+            :headers="token"
             :on-success="imgUploadSuccess"
           >
             <i class="el-icon-plus"></i>
@@ -137,6 +139,7 @@
 export default {
   data() {
     return {
+      token: { token: '' },
       dialogVisible: false,
       pagination: {
         total: 50,
@@ -165,7 +168,7 @@ export default {
       this.$http({
         url: '/api/depts',
         method: 'get'
-      }).then((res) => {
+      }).then(res => {
         this.deptList = res.data
       })
     },
@@ -178,7 +181,7 @@ export default {
           page: this.pagination.page,
           ...this.searchForm
         }
-      }).then((res) => {
+      }).then(res => {
         this.pagination.total = res.data.total
         this.tableData = res.data.rows
       })
@@ -193,13 +196,13 @@ export default {
       this.formData = row
     },
     allDel() {
-      const ids = this.multipleSelection.map((item) => item.id).join(',')
+      const ids = this.multipleSelection.map(item => item.id).join(',')
       this.$confirm('是否删除这个', '删除')
         .then(() => {
           this.$http({
             url: '/api/user/delete/' + ids,
             method: 'delete'
-          }).then((res) => {
+          }).then(res => {
             this.search()
             this.$message.success('删除成功')
           })
@@ -214,7 +217,7 @@ export default {
           this.$http({
             url: '/api/user/delete/' + row.id,
             method: 'delete'
-          }).then((res) => {
+          }).then(res => {
             this.search()
             this.$message.success('删除成功')
           })
@@ -236,7 +239,7 @@ export default {
         url: '/api/user/' + (this.formData.id ? 'update' : 'add'),
         method: 'post',
         data: this.formData
-      }).then((res) => {
+      }).then(res => {
         this.$message.success('操作成功')
         this.search()
         this.dialogVisible = false
