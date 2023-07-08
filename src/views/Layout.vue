@@ -9,14 +9,20 @@
         style="height: 100%;"
         active-text-color="#ffd04b"
       >
-        <el-submenu :index="meau.name" v-for="(meau, index) of routesMeaus" :key="index">
+        <el-submenu
+          :index="meau.name"
+          v-for="(meau, index) of routesMeaus"
+          :key="index"
+        >
           <template slot="title">
             <!-- <i class="el-icon-location"></i> -->
             <span>{{ meau.name }}</span>
           </template>
           <template v-for="(item, indey) of meau.children">
             <router-link :to="`/${meau.name}/${item.name}`">
-              <el-menu-item :index="`${index}-${indey}`">{{item.name}}</el-menu-item>
+              <el-menu-item :index="`${index}-${indey}`">{{
+                item.name
+              }}</el-menu-item>
             </router-link>
           </template>
         </el-submenu>
@@ -27,6 +33,9 @@
         <el-dropdown class="user-info" size="medium" @command="handleCommand">
           <span class="el-dropdown-link">
             <!-- {{ userInfo.name }}<i class="el-icon-arrow-down el-icon--right"></i> -->
+            <el-button @click="() => $router.push('/login')"
+              >退出登录</el-button
+            >
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="logout">退出</el-dropdown-item>
