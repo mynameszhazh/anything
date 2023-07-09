@@ -33,9 +33,7 @@
         <el-dropdown class="user-info" size="medium" @command="handleCommand">
           <span class="el-dropdown-link">
             <!-- {{ userInfo.name }}<i class="el-icon-arrow-down el-icon--right"></i> -->
-            <el-button @click="() => $router.push('/login')"
-              >退出登录</el-button
-            >
+            <el-button @click="loginout">退出登录</el-button>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="logout">退出</el-dropdown-item>
@@ -63,6 +61,10 @@ export default {
   },
   components: {},
   methods: {
+    loginout() {
+      this.$router.push('/login')
+      localStorage.removeItem('token')
+    },
     handleCommand(command) {
       switch (command) {
         case 'logout':

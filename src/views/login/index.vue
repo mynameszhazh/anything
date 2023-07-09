@@ -52,6 +52,7 @@ export default {
           this.$message.warning(res.msg)
           return
         }
+        localStorage.setItem('token', res.data)
         this.$message.success('login 成功')
         this.$router.push('/System/user')
       })
