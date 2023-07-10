@@ -7,7 +7,15 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "excel/home",
+    redirect: "login",
+  },
+  {
+    path: "/login",
+    name: 'login',
+    component: () =>
+      import(
+        "../views/login/index.vue"
+      ),
   },
   {
     path: "/excel",
