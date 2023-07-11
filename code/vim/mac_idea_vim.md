@@ -1,6 +1,3 @@
-- code
-
-```js
 " ================================================================================
 " Desc: IntelliJ IDEA ideavim - PyCharm 2023.3.1(CE)
 " Redesign : aBenL@zhihu.com
@@ -562,10 +559,15 @@ set vs-success
 
 "自定义"
 inoremap jj <ESC>
+
 nnoremap J 5j
 nnoremap K 5k
 nnoremap <S-L> $
-nnoremap <S-H> 0 
+nnoremap <S-H> 0
 nnoremap K 5k
+
+vnoremap K 5k
+vnoremap J 5j
+vnoremap <S-L> $
+vnoremap <S-H> 0
 """""""""""""""""""""""""""""""""""""" END """""""""""""""""""""""""""""""""""""""
-```
