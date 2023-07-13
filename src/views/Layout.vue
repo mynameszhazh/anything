@@ -49,6 +49,7 @@
 
 <script>
 import { routesMeaus } from '../router/index'
+import { removeToken } from '../utils/auth.js'
 export default {
   name: 'layout',
   data() {
@@ -63,7 +64,8 @@ export default {
   methods: {
     loginout() {
       this.$router.push('/login')
-      localStorage.removeItem('token')
+      // localStorage.removeItem('token')
+      removeToken()
     },
     handleCommand(command) {
       switch (command) {
