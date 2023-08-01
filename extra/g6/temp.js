@@ -603,18 +603,7 @@ const registerFn = () => {
               ['L', endPoint.x / 3 + (2 / 3) * startPoint.x, endPoint.y], // 三分之二处
               ['L', endPoint.x, endPoint.y],
             ],
-            // startArrow: {
-            //   // 自定义箭头指向(0, 0)，尾部朝向 x 轴正方向的 path
-            //   path: 'M 0,0 L 20,10 L 20,-10 Z',
-            //   // 箭头的偏移量，负值代表向 x 轴正方向移动
-            //   // d: -10,
-            //   // v3.4.1 后支持各样式属性
-            //   fill: '#333',
-            //   stroke: '#666',
-            //   opacity: 0.8,
-            //   // ...
-            // },
-            endArrow: {
+            startArrow: {
               // 自定义箭头指向(0, 0)，尾部朝向 x 轴正方向的 path
               path: 'M 0,0 L 20,10 L 20,-10 Z',
               // 箭头的偏移量，负值代表向 x 轴正方向移动
@@ -623,7 +612,18 @@ const registerFn = () => {
               fill: '#333',
               stroke: '#666',
               opacity: 0.8,
+              // ...
             },
+            // endArrow: {
+            //   // 自定义箭头指向(0, 0)，尾部朝向 x 轴正方向的 path
+            //   path: 'M 0,0 L 20,10 L 20,-10 Z',
+            //   // 箭头的偏移量，负值代表向 x 轴正方向移动
+            //   // d: -10,
+            //   // v3.4.1 后支持各样式属性
+            //   fill: '#333',
+            //   stroke: '#666',
+            //   opacity: 0.8,
+            // },
           },
           // 在 G6 3.3 及之后的版本中，必须指定 name，可以是任意字符串，但需要在同一个自定义元素类型中保持唯一性
           name: 'path-shape',
