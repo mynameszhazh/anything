@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { setToken } from '../../utils/auth.js'
 export default {
   data() {
     return {
@@ -52,7 +53,7 @@ export default {
           this.$message.warning(res.msg)
           return
         }
-        localStorage.setItem('token', res.data)
+        setToken(res.data)
         this.$message.success('login 成功')
         this.$router.push('/System/user')
       })
