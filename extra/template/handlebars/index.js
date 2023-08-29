@@ -2,23 +2,35 @@ const { compilerFn } = require('./core.js')
 
 const schemas = [
   {
-    name: '报警时间',
-    prop: 'startTime'
-  },
-  {
-    name: '报警设备',
-    prop: 'deviceId'
-  },
-  {
-    name: '报警类型',
-    prop: 'alarmType'
-  },
-  {
-    name: '报警内容',
-    prop: 'alarmPriority',
+    name: '用户id',
+    prop: 'yhid',
     search: {
       show: true
     }
+  },
+  {
+    name: '通知类型',
+    type: 'select',
+    dictName: 'TZLX',
+    isSlot: true,
+    prop: 'tzlx',
+    search: {
+      show: true
+    }
+  },
+  {
+    name: '是否推送',
+    type: 'select',
+    dictName: 'SFTZ',
+    isSlot: true,
+    prop: 'sfts',
+    search: {
+      show: true
+    }
+  },
+  {
+    name: '备注',
+    prop: 'remark'
   }
 ]
 // 是否需要操作
@@ -32,18 +44,14 @@ compilerFn(
   {
     schema: schemas,
     dictArr: [
-      // {
-      //   name: 'QYLX',
-      //   code: 'QYLX'
-      // }
-      // {
-      //   name: 'JYXZ',
-      //   code: 'JYXZ'
-      // },
-      // {
-      //   name: 'BCGG',
-      //   code: 'BCGG'
-      // },
+      {
+        name: 'TZLX',
+        code: 'VIDEO_NOTICE_TYPE'
+      },
+      {
+        name: 'SFTZ',
+        code: 'VIDEO_EVENT_SFTZ'
+      }
       // {
       //   name: 'JYZQ',
       //   code: 'JYZQ'
@@ -66,14 +74,14 @@ compilerFn(
       // }
     ],
     opeBtn: [
-      // {
-      //   name: '登记',
-      //   method: 'register'
-      // }
-      // {
-      //   name: '删除设备',
-      //   method: 'mockdel'
-      // }
+      {
+        name: '添加',
+        method: 'add'
+      },
+      {
+        name: '删除',
+        method: 'del'
+      }
       // {
       //   name: '报告信息',
       //   method: 'reportInfo'
@@ -85,12 +93,12 @@ compilerFn(
     ],
     tabBtn: [
       {
-        name: '上传',
-        method: 'upload'
+        name: '修改',
+        method: 'edit'
       },
       {
-        name: '删除',
-        method: 'mockDel'
+        name: '详情',
+        method: 'view'
       }
       // {
       //   name: '预览',
@@ -98,15 +106,15 @@ compilerFn(
       // }
     ],
     apiCodes: {
-      search: 'APPRAISE_SEARCH',
-      del: 'APPRAISE_DEL',
-      add: 'APPRAISE_ADD',
-      edit: 'APPRAISE_EDIT',
-      view: 'APPRAISE_VIEW'
+      search: 'CAMERA_SMS_NOTICE_SEARCH',
+      del: 'CAMERA_SMS_NOTICE_DEL',
+      add: 'CAMERA_SMS_NOTICE_ADD',
+      edit: 'CAMERA_SMS_NOTICE_EDIT',
+      view: 'CAMERA_SMS_NOTICE_VIEW'
     }
   },
   './index.vue',
-  './lts/base.hbs'
+  './all.vue.hbs'
   // './beat/xj2_mock.hbs'
   // './beat/xj2_mockOnlyTable.hbs'
 )
