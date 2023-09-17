@@ -3,3 +3,10 @@
 ## 认识微服务
 
 - [base](./base.md)
+
+## first 小案例
+
+- [firstCase](./case.md)
+
+## Eureka 注册中心
+- [Eureka](./Eureka.md)
