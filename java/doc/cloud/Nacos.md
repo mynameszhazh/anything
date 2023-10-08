@@ -71,6 +71,12 @@ spring:
   - 在 nacos 服务直接进行操作
     - 全国各地的人都是可以访问这个服务
 
+### 直接搭建集群
+- 多个地方配置启动nacos
+- 通过一个nginx 进行统一代理
+- 用法和启动一个nacos服务的操作是一样的
+  - 它里面的所有配置不知道是不是共享的
+
 ## 环境隔离 namespace
 
 - 每个 nacos 服务实例会有一个 namespace 和 group 的概念
@@ -93,3 +99,32 @@ spring:
 ### 统一配置管理
 
 - 配置更改热更新
+  - 本地启动的 `nacos` 服务进行配置
+  - 项目启动去调用 `nacos` 的公用配置
+    - 服务环境
+    - nacos 地址
+    - 后缀名
+- 执行热更新
+
+```java
+@RefreshScope
+public String now() {
+  return "1234"
+}
+```
+
+- 获取配置的内容
+  - @Value()
+    - 直接使用
+    - 需要通过触发更新 @RefreshScope
+  - @ConfigurationProperties()
+    - @Component 之后 注入 @Autowrite 进行获取
+    - 会自动更新
+
+### 配置共享
+- 根据文件的名字, 和我配置规则进行获取配置文件
+- 优先级
+  - 公用的优先
+  - dev 为次
+  - 本地的最后
+- 最终会是一个合并的操作
