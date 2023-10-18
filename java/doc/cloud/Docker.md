@@ -63,7 +63,80 @@
   > docker exec -it mr bash
   > redis-cli
 
+### 数据卷(volume)
+
+> 共享数据
+
+### 安装 mysql
+
+- 加载镜像
+- 创建目录 /tmp/mysql/data
+- 创建目录 /tmp/mssql/conf
+- 创建容器,
+  - 挂载 /tmp/msyql/data
+  - 挂载 /tmp/msyql/conf/hmy.cnf
+  - 设置密码
+
+```sh
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=123 -v /Users/mac/Desktop/project/java/docker/mysql/conf/hmy.cnf:/etc/mysql/conf.d/hmy.cnf -v /Users/mac/Desktop/project/java/docker/mysql/data:/var/lib/mysql -p 3306:3306 -d mysql:5.7.25
+```
+
 ## DockerFile 自定义镜像
+
+- 基本的环境构建
+
+```dockerFile
+# 指定基础镜像
+FROM ubuntu:16.04
+# 配置环境变量，JDK的安装目录
+ENV JAVA_DIR=/usr/local
+
+# 拷贝jdk和java项目的包
+COPY ./jdk8.tar.gz $JAVA_DIR/
+COPY ./docker-demo.jar /tmp/app.jar
+
+# 安装JDK
+RUN cd $JAVA_DIR \
+ && tar -xf ./jdk8.tar.gz \
+ && mv ./jdk1.8.0_144 ./java8
+
+# 配置环境变量
+ENV JAVA_HOME=$JAVA_DIR/java8
+ENV PATH=$PATH:$JAVA_HOME/bin
+
+# 暴露端口
+EXPOSE 8090
+# 入口，java项目的启动命令
+ENTRYPOINT java -jar /tmp/app.jar
+```
+
+- 简化版
+
+```dockerfile
+# 指定基础镜像
+FROM java:8-alpine
+
+# 拷贝jdk和java项目的包
+COPY ./docker-demo.jar /tmp/app.jar
+
+# 暴露端口
+EXPOSE 8090
+# 入口，java项目的启动命令
+ENTRYPOINT java -jar /tmp/app.jar
+```
+
+- 执行命令 得到镜像
+
+```sh
+# 注意要存在dockerfile 文件
+docker build -t javaweb:1.0 .
+```
+
+- 执行命令 创建容器
+
+```sh
+docker run --name web -p 8090:8090 -d javaweb:1.0
+```
 
 ## Docker-Compose
 
