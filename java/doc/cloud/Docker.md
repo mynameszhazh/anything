@@ -140,4 +140,10 @@ docker run --name web -p 8090:8090 -d javaweb:1.0
 
 ## Docker-Compose
 
+> 批量执行 各个镜像服务
+
 ## Docker 镜像服务
+
+> 可以自定义镜像仓库
+
+- 保存自己的镜像仓库
