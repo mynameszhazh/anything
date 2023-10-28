@@ -41,3 +41,14 @@
   - 空间换时间的操作
 
 ### 数据库建模
+
+> powerDesigner
+
+- RBAC 模型
+  > 通过角色进行控制角色
+
+## Shiro
+- [Shiro](./src/Shiro.md)
+
+## POI
+- [POI](./src/POI.md)
