@@ -57,3 +57,6 @@
 - [file](./src/file.md)
   - 文件上传
   - pdf
+
+## 人工智能
+- [人工智能](./src/cleverMachines.md)
