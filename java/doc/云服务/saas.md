@@ -52,3 +52,15 @@
 
 ## POI
 - [POI](./src/POI.md)
+
+## 文件
+- [file](./src/file.md)
+  - 文件上传
+  - pdf
+
+## 人工智能
+- [人工智能](./src/cleverMachines.md)
+
+## 代码生成器
+- [代码生成器](./src/codeGenerator.md)
+  - freeMarker
