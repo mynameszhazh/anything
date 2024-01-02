@@ -1,55 +1,61 @@
 /*
-  11 - Tuple to Object
+  2 - Get Return Type
   -------
-  by sinoon (@sinoon) #easy #object-keys
+  by Anthony Fu (@antfu) #medium #infer #built-in
 
   ### Question
 
-  Given an array, transform it into an object type and the key/value must be in the provided array.
+  Implement the built-in `ReturnType<T>` generic without using it.
 
-  For example:
+  For example
 
   ```ts
-  const tuple = ['tesla', 'model 3', 'model X', 'model Y'] as const
+  const fn = (v: boolean) => {
+    if (v)
+      return 1
+    else
+      return 2
+  }
 
-  type result = TupleToObject<typeof tuple> // expected { 'tesla': 'tesla', 'model 3': 'model 3', 'model X': 'model X', 'model Y': 'model Y'}
+  type a = MyReturnType<typeof fn> // should be "1 | 2"
   ```
 
-  > View on GitHub: https://tsch.js.org/11
+  > View on GitHub: https://tsch.js.org/2
 */
 
 /* _____________ Your Code Here _____________ */
 
-type TupleToObject<T extends readonly PropertyKey[]> = {
-  [K in T[number]]: K
-} 
+type MyReturnType<T extends Function> = T extends (...args: any) => infer R ? R : never
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 
-const tuple = ['tesla', 'model 3', 'model X', 'model Y'] as const
-type r = typeof tuple
-const tupleNumber = [1, 2, 3, 4] as const
-const sym1 = Symbol(1)
-const sym2 = Symbol(2)
-const tupleSymbol = [sym1, sym2] as const
-const tupleMix = [1, '2', 3, '4', sym1] as const
-
 type cases = [
-  Expect<Equal<TupleToObject<typeof tuple>, { 'tesla': 'tesla', 'model 3': 'model 3', 'model X': 'model X', 'model Y': 'model Y' }>>,
-  Expect<Equal<TupleToObject<typeof tupleNumber>, { 1: 1, 2: 2, 3: 3, 4: 4 }>>,
-  Expect<Equal<TupleToObject<typeof tupleSymbol>, { [sym1]: typeof sym1, [sym2]: typeof sym2 }>>,
-  Expect<Equal<TupleToObject<typeof tupleMix>, { 1: 1, '2': '2', 3: 3, '4': '4', [sym1]: typeof sym1 }>>,
+  Expect<Equal<string, MyReturnType<() => string>>>,
+  Expect<Equal<123, MyReturnType<() => 123>>>,
+  Expect<Equal<ComplexObject, MyReturnType<() => ComplexObject>>>,
+  Expect<Equal<Promise<boolean>, MyReturnType<() => Promise<boolean>>>>,
+  Expect<Equal<() => 'foo', MyReturnType<() => () => 'foo'>>>,
+  Expect<Equal<1 | 2, MyReturnType<typeof fn>>>,
+  Expect<Equal<1 | 2, MyReturnType<typeof fn1>>>,
 ]
 
-// @ts-expect-error
-type error = TupleToObject<[[1, 2], {}]>
+type ComplexObject = {
+  a: [12, 'foo']
+  bar: 'hello'
+  prev(): number
+}
+
+const fn = (v: boolean) => v ? 1 : 2
+const fn1 = (v: boolean, w: any) => v ? 1 : 2
 
 /* _____________ Further Steps _____________ */
 /*
-  > Share your solutions: https://tsch.js.org/11/answer
-  > View solutions: https://tsch.js.org/11/solutions
+  > Share your solutions: https://tsch.js.org/2/answer
+  > View solutions: https://tsch.js.org/2/solutions
   > More Challenges: https://tsch.js.org
 */
+
+
 
 
