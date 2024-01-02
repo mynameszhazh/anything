@@ -20,12 +20,15 @@
 
 /* _____________ Your Code Here _____________ */
 
-type TupleToObject<T extends readonly any[]> = any
+type TupleToObject<T extends readonly PropertyKey[]> = {
+  [K in T[number]]: K
+} 
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 
 const tuple = ['tesla', 'model 3', 'model X', 'model Y'] as const
+type r = typeof tuple
 const tupleNumber = [1, 2, 3, 4] as const
 const sym1 = Symbol(1)
 const sym2 = Symbol(2)
