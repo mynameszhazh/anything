@@ -43,14 +43,14 @@
 ### 27 课
 
 - 你是如何保持工作和生活之间的平衡的？
-  - ``
+  - `How are you keep balance between work and life?`
 
 ### 28 课
 
 - 在床上有一只狗。
-  - ``
+  - `there is a dog on the bed`
 - 在房间里有十个人。
-  - ``
+  - `there are ten people in the room`
 
 ### 29 课
 
@@ -60,7 +60,29 @@
 
 ### 30 课
 
+- 我认为中文比英文是更难的。
+  - `i think chinese is more diffuct than english`
+  - `i think chinese is more difficut than english` 更正
+- 你做的内容比你说的内容更重要
+  - `what you do is more important than what you say`
+
 ### 31 课
+
+- 1.友谊是我们之间最宝贵的东西。
+
+  - `friendship is the most valuable thing between ours`
+
+- 生词
+
+  - valuable (宝贵的)
+
+- 你应该买给你女儿你可以的最贵的礼物
+  - `you should bought a gift doughter you can find the most expensise`
+  - `You should buy your daughter the most expensive gift you can have`
+- 你是这个世界上最漂亮的女人,但是 当你笑的时候,你更漂亮
+  - `you are the most beautful woman in the world but you are more beautful when you smail`
+    - 这个 smail 不多说
+  - `You are the most beautiful woman in the world, but when you smile, you are even more beautiful`
 
 ### 32 课
 
