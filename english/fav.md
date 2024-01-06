@@ -7,3 +7,7 @@
 ### 你做的内容比你说的内容更重要
 
 > what you do is more important than what you say
+
+### 完成是比完美更好的
+
+> done is better than perfect
