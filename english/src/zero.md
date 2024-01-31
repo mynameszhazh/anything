@@ -1,3 +1,12 @@
+## 阶段
+
+
+- 语法
+- 加深语法
+- 场景
+- 英英释义
+- 额外的提升
+
 ## 课后练习
 
 ### 22 课
@@ -33,7 +42,6 @@
   - `She is old enough to attend this party`
 
 ### 25.5 课
-
 - 我可以做给你晚餐。。
 - `i can make dinner for you`
 - 我的父亲昨天买给他自己一部新手机。
@@ -184,7 +192,27 @@
 
 ### 40 课
 
+- 他（过去）停下来去喝一些水。
+  - `he stoped to drink some water`
+  - `He stopped to drink some water.`
+- 他（过去）停止喝水
+- `he stopped drinking`
+- `he stopped drinking wather`
+- 我记得昨天锁门（这件事）。
+  - `i forget locking yesterday`
+  - `i forget locking the door yesterday`
+- 我忘记了昨天锁门（这件事）。
+  - `I forgot to lock the door yesterday.`
+
 ### 41 课
+- 我们应该尝试尽快解决这个问题。
+  - `we should  try to soleve the problem as soon as possiple`
+- 你可以尝试使用一个电脑来解决这个问。
+  - `you can  try useing a computer to solve this problem`
+
+- 生词
+  - immerse (沉浸)
+  - fitness (健康) (表示身体特别好的)
 
 ### 42 课
 

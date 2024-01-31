@@ -130,3 +130,47 @@ var findTargetSumWays = function(nums, target) {
 ```
 
 ## 理解
+
+### 刚好
+```js
+var findTargetSumWays = function(nums, target) {
+  if (target < 0 || target % 2 != 0) return 0
+  target /= 2
+
+  let f = new Array(target + 1).fill(0)
+  f[0] = 1
+
+  for (let x of nums) {
+    for (let c = target; c > 0; c--) {
+      f[c] = f[c] + f[c - x]
+    }
+  }
+
+  return f[target]
+}
+
+
+// 求的是方案数量
+const dfs = (i, c) => {
+  if (i < 0) {
+    if (c == 0) return 1
+    return 0
+  }
+  if (c < nums[i]) return dfs(i - 1, c)
+  return dfs(i - 1, c) + dfs(i - 1, c - nums[i])
+}
+```
+
+### 至多
+```js
+const dfs = (i, c) => {
+  if (i < 0) {
+    if (c == 0) return 1
+    return 0
+  }
+  if (c < nums[i]) return dfs(i - 1, c)
+  return dfs(i - 1, c) + dfs(i - 1, c - nums[i])
+}
+
+
+```
