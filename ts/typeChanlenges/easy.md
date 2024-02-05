@@ -79,3 +79,12 @@ type Concat<T extends Tuple, U extends Tuple> = [...T, ...U]
 ### Includes
 
 - T[number] 表示内部元素的 集合吗?j
+
+### Push(3057) unshift(3060)
+
+- [...T, U]
+
+### Parameters(3312)
+
+- infer
+- extends
