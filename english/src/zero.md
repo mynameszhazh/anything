@@ -1,6 +1,5 @@
 ## 阶段
 
-
 - 语法
 - 加深语法
 - 场景
@@ -42,6 +41,7 @@
   - `She is old enough to attend this party`
 
 ### 25.5 课
+
 - 我可以做给你晚餐。。
 - `i can make dinner for you`
 - 我的父亲昨天买给他自己一部新手机。
@@ -205,10 +205,12 @@
   - `I forgot to lock the door yesterday.`
 
 ### 41 课
+
 - 我们应该尝试尽快解决这个问题。
-  - `we should  try to soleve the problem as soon as possiple`
+  - `we should try to soleve the problem as soon as possiple`
 - 你可以尝试使用一个电脑来解决这个问。
-  - `you can  try useing a computer to solve this problem`
+
+  - `you can try useing a computer to solve this problem`
 
 - 生词
   - immerse (沉浸)
@@ -216,11 +218,61 @@
 
 ### 42 课
 
+- 你（过去）如何设法成功找到你的丢失的钥匙的？
+  - `how did you manage to find your lost key`
+  - `How did you manage to successfully find your lost key in the past?`
+- 你（过去）如何设法成功学习一门新的语言的？
+
+  - `how did you manage to success learn a new language`
+  - `How did you manage to successfully learn a new language in the past?`
+
+- 生词
+  - overcome (克服)
+
 ### 43 课
+
+- 我(已经)丢了我的工作
+  - `i have lost my job`
+- 我(已经)告诉了你真相
+  - `i have tolded you truce`
+  - `I have told you the truth`
 
 ### 44 课
 
+- 她(已经)支付了账单
+  - `she have payed the bill`
+  - `She has paid the bill`
+- 她(已经)锁上了门。
+  - `she have locked the door`
+  - `She has locked the door.`
+- 他迄今为止(还没有)掌握钢琴。
+  - `he haven't master piano yet`
+  - `He has not yet mastered the piano.`
+- 他迄今为止(还没有)解决这个问题。
+  - `he have't solved this problem yet`
+  - `He has not yet solved this problem.`
+
+```txt
+he has bought a Christmas tree for his family but he hasn't decorated it yet because he is too busy
+```
+
+- 生词
+  - decorated (装饰)
+
 ### 45 课
+- 你曾经去过加州吗?
+  - `have you ever to golifonia`
+  - `Have you ever been to California?` 
+- 你以前曾经跳过舞吗?
+  - `have you ever been to dance ` 
+  - `Have you ever danced before?`
+- 你以前曾经见过他吗?
+  - `have you ever been to see him before`
+  - `Have you ever seen him before?`
+- 你曾经读过这本书吗?
+  -  `have you ever read the book`
+  -  `have you ever read this book`
+
 
 ### 45.5 课
 
