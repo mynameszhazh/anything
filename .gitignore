@@ -3,6 +3,7 @@ node_modules
 /dist
 __pycache__
 */static
+**/img
 __snapshots__
 
 # local env files
