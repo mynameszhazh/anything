@@ -187,30 +187,30 @@ const routes = [
         /* webpackChunkName: "Main" */ "../views/Layout.vue"
       ),
     children: [
-      {
-        path: "test1",
-        name: "test1",
-        component: () =>
-          import(
-            /* webpackChunkName: "Main" */ "../views/test/test.vue"
-          ),
-      },
-      {
-        path: "cssMoudle",
-        name: "cssMoudle",
-        component: () =>
-          import(
-            /* webpackChunkName: "Main" */ "../views/test/cssMoudle.vue"
-          ),
-      },
-      {
-        path: "routerTest",
-        name: "routerTest",
-        component: () =>
-          import(
-            /* webpackChunkName: "Main" */ "../views/test/routerTest.vue"
-          ),
-      },
+      // {
+      //   path: "test1",
+      //   name: "test1",
+      //   component: () =>
+      //     import(
+      //       /* webpackChunkName: "Main" */ "../views/test/test.vue"
+      //     ),
+      // },
+      // {
+      //   path: "cssMoudle",
+      //   name: "cssMoudle",
+      //   component: () =>
+      //     import(
+      //       /* webpackChunkName: "Main" */ "../views/test/cssMoudle.vue"
+      //     ),
+      // },
+      // {
+      //   path: "routerTest",
+      //   name: "routerTest",
+      //   component: () =>
+      //     import(
+      //       /* webpackChunkName: "Main" */ "../views/test/routerTest.vue"
+      //     ),
+      // },
     ],
   },
   {

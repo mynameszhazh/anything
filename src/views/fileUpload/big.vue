@@ -197,4 +197,4 @@ export default {
 }
 </script>
 <Fieldset></Fieldset>
-<style lang="scss" scoped></style>
+<style lang="less" scoped></style>
