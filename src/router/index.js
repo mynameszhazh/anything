@@ -1,191 +1,182 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Upload from "../views/excel/upload.vue";
-import { parseRoutes } from "../utils/paser";
-Vue.use(VueRouter);
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Upload from '../views/excel/upload.vue'
+import { parseRoutes } from '../utils/paser'
+Vue.use(VueRouter)
 
 const routes = [
   {
-    path: "/",
-    redirect: "login",
+    path: '/',
+    redirect: 'login'
   },
   {
-    path: "/login",
+    path: '/login',
     name: 'login',
-    component: () =>
-      import(
-        "../views/login/index.vue"
-      ),
+    component: () => import('../views/login/index.vue')
   },
   {
-    path: "/excel",
-    name: "excel",
+    path: '/excel',
+    name: 'excel',
     component: () =>
-      import(
-        /* webpackChunkName: "Main" */ "../views/Layout.vue"
-      ),
+      import(/* webpackChunkName: "Main" */ '../views/Layout.vue'),
     children: [
       {
-        path: "home",
-        name: "home",
+        path: 'home',
+        name: 'home',
         component: () =>
-          import(
-            /* webpackChunkName: "Main" */ "../views/excel/home.vue"
-          ),
+          import(/* webpackChunkName: "Main" */ '../views/excel/home.vue')
       },
       {
-        path: "upload",
-        name: "upload",
-        component: Upload,
-      },
-    ],
+        path: 'upload',
+        name: 'upload',
+        component: Upload
+      }
+    ]
   },
   {
-    path: "/fileUpload",
-    name: "fileUpload",
+    path: '/fileUpload',
+    name: 'fileUpload',
     component: () =>
-      import(
-        /* webpackChunkName: "Main" */ "../views/Layout.vue"
-      ),
+      import(/* webpackChunkName: "Main" */ '../views/Layout.vue'),
     children: [
       {
-        path: "big",
-        name: "big",
+        path: 'big',
+        name: 'big',
         component: () =>
-          import(
-            /* webpackChunkName: "Main" */ "../views/fileUpload/big.vue"
-          ),
-      },
-    ],
+          import(/* webpackChunkName: "Main" */ '../views/fileUpload/big.vue')
+      }
+    ]
   },
   {
-    path: "/extra",
-    name: "extra",
+    path: '/extra',
+    name: 'extra',
     component: () =>
-      import(
-        /* webpackChunkName: "Main" */ "../views/Layout.vue"
-      ),
+      import(/* webpackChunkName: "Main" */ '../views/Layout.vue'),
     children: [
       {
         // 高性能渲染数据
-        path: "HPrenderData",
-        name: "HPrenderData",
+        path: 'HPrenderData',
+        name: 'HPrenderData',
         component: () =>
           import(
-            /* webpackChunkName: "Main" */ "../views/extra/HPrenderData.vue"
-          ),
+            /* webpackChunkName: "Main" */ '../views/extra/HPrenderData.vue'
+          )
       },
       {
         // 拖拉
-        path: "Draggable",
-        name: "Draggable",
+        path: 'Draggable',
+        name: 'Draggable',
         component: () =>
           import(
-            /* webpackChunkName: "Main" */ "../views/extra/Draggable/Draggable.vue"
-          ),
-      },
-    ],
+            /* webpackChunkName: "Main" */ '../views/extra/Draggable/Draggable.vue'
+          )
+      }
+    ]
   },
   {
-    path: "/directive",
-    name: "directive",
+    path: '/directive',
+    name: 'directive',
     component: () =>
-      import(
-        /* webpackChunkName: "Main" */ "../views/Layout.vue"
-      ),
+      import(/* webpackChunkName: "Main" */ '../views/Layout.vue'),
     children: [
       {
         // 高性能渲染数据
-        path: "copy",
-        name: "copy",
+        path: 'copy',
+        name: 'copy',
         component: () =>
-          import(
-            /* webpackChunkName: "Main" */ "../views/directive/copy.vue"
-          ),
+          import(/* webpackChunkName: "Main" */ '../views/directive/copy.vue')
       },
       {
-        path: "longpress",
-        name: "longpress",
+        path: 'longpress',
+        name: 'longpress',
         component: () =>
           import(
-            /* webpackChunkName: "Main" */ "../views/directive/longpress.vue"
-          ),
+            /* webpackChunkName: "Main" */ '../views/directive/longpress.vue'
+          )
       },
       {
-        path: "debounce",
-        name: "debounce",
+        path: 'debounce',
+        name: 'debounce',
         component: () =>
           import(
-            /* webpackChunkName: "Main" */ "../views/directive/debounce.vue"
-          ),
+            /* webpackChunkName: "Main" */ '../views/directive/debounce.vue'
+          )
       },
       {
-        path: "emoji",
-        name: "emoji",
+        path: 'emoji',
+        name: 'emoji',
         component: () =>
-          import(
-            /* webpackChunkName: "Main" */ "../views/directive/emoji.vue"
-          ),
+          import(/* webpackChunkName: "Main" */ '../views/directive/emoji.vue')
       },
       {
-        path: "lazyLoad",
-        name: "lazyLoad",
+        path: 'lazyLoad',
+        name: 'lazyLoad',
         component: () =>
           import(
-            /* webpackChunkName: "Main" */ "../views/directive/lazyLoad.vue"
-          ),
+            /* webpackChunkName: "Main" */ '../views/directive/lazyLoad.vue'
+          )
       },
       {
-        path: "waterMarker",
-        name: "waterMarker",
+        path: 'waterMarker',
+        name: 'waterMarker',
         component: () =>
           import(
-            /* webpackChunkName: "Main" */ "../views/directive/waterMarker.vue"
-          ),
+            /* webpackChunkName: "Main" */ '../views/directive/waterMarker.vue'
+          )
       },
       {
-        path: "graggable",
-        name: "graggable",
+        path: 'graggable',
+        name: 'graggable',
         component: () =>
           import(
-            /* webpackChunkName: "Main" */ "../views/directive/draggable.vue"
-          ),
-      },
-    ],
+            /* webpackChunkName: "Main" */ '../views/directive/draggable.vue'
+          )
+      }
+    ]
   },
   {
-    path: "/components",
-    name: "components",
+    path: '/components',
+    name: 'components',
     component: () =>
-      import(
-        /* webpackChunkName: "Main" */ "../views/Layout.vue"
-      ),
+      import(/* webpackChunkName: "Main" */ '../views/Layout.vue'),
     children: [
       {
-        path: "elementform",
-        name: "elementform",
+        path: 'elementform',
+        name: 'elementform',
         component: () =>
-          import(
-            /* webpackChunkName: "Main" */ "../views/components/index.vue"
-          ),
+          import(/* webpackChunkName: "Main" */ '../views/components/index.vue')
       },
       {
-        path: "swiper",
-        name: "swiper",
+        path: 'swiper',
+        name: 'swiper',
         component: () =>
           import(
-            /* webpackChunkName: "Main" */ "../views/components/swiper/index.vue"
-          ),
-      },
-    ],
+            /* webpackChunkName: "Main" */ '../views/components/swiper/index.vue'
+          )
+      }
+    ]
   },
   {
-    path: "/test",
-    name: "test",
+    path: '/css',
+    name: 'css',
     component: () =>
-      import(
-        /* webpackChunkName: "Main" */ "../views/Layout.vue"
-      ),
+      import(/* webpackChunkName: "Main" */ '../views/Layout.vue'),
+    children: [
+      // {
+      //   path: "css",
+      //   name: "css",
+      //   component: () =>
+      //     import(
+      //       /* webpackChunkName: "Main" */ "../views/css/index.vue"
+      //     ),
+      // },
+    ]
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: () =>
+      import(/* webpackChunkName: "Main" */ '../views/Layout.vue'),
     children: [
       // {
       //   path: "test1",
@@ -211,59 +202,53 @@ const routes = [
       //       /* webpackChunkName: "Main" */ "../views/test/routerTest.vue"
       //     ),
       // },
-    ],
+    ]
   },
   {
-    path: "/webRTC",
-    name: "webRTC",
+    path: '/webRTC',
+    name: 'webRTC',
     component: () =>
-      import(
-        /* webpackChunkName: "Main" */ "../views/Layout.vue"
-      ),
+      import(/* webpackChunkName: "Main" */ '../views/Layout.vue'),
     children: [
       {
-        path: "chat",
-        name: "chat",
+        path: 'chat',
+        name: 'chat',
         component: () =>
-          import(
-            /* webpackChunkName: "Main" */ "../views/webRtc/chat.vue"
-          ),
-      },
-    ],
+          import(/* webpackChunkName: "Main" */ '../views/webRtc/chat.vue')
+      }
+    ]
   },
   {
-    path: "/system",
-    name: "System",
+    path: '/system',
+    name: 'System',
     component: () =>
-      import(
-        /* webpackChunkName: "Main" */ "../views/Layout.vue"
-      ),
+      import(/* webpackChunkName: "Main" */ '../views/Layout.vue'),
     children: [
       {
-        path: "role",
-        name: "role",
+        path: 'role',
+        name: 'role',
         component: () =>
           import(
-            /* webpackChunkName: "Main" */ "../views/system/role/index.vue"
-          ),
+            /* webpackChunkName: "Main" */ '../views/system/role/index.vue'
+          )
       },
       {
-        path: "user",
-        name: "user",
+        path: 'user',
+        name: 'user',
         component: () =>
           import(
-            /* webpackChunkName: "Main" */ "../views/system/user/index.vue"
-          ),
-      },
-    ],
+            /* webpackChunkName: "Main" */ '../views/system/user/index.vue'
+          )
+      }
+    ]
   }
-];
+]
 
-export const routesMeaus = [];
-parseRoutes(routesMeaus, routes);
+export const routesMeaus = []
+parseRoutes(routesMeaus, routes)
 
 const router = new VueRouter({
-  routes,
-});
+  routes
+})
 
-export default router;
+export default router
