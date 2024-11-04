@@ -219,6 +219,20 @@ const routes = [
     ]
   },
   {
+    path: '/web3',
+    name: 'web3',
+    component: () =>
+      import(/* webpackChunkName: "Main" */ '../views/Layout.vue'),
+    children: [
+      {
+        path: 'test',
+        name: 'test',
+        component: () =>
+          import(/* webpackChunkName: "Main" */ '../views/web3/index.vue')
+      }
+    ]
+  },
+  {
     path: '/system',
     name: 'System',
     component: () =>
