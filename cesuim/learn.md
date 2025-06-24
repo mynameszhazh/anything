@@ -13,8 +13,11 @@
 #### 2. Cesium 架构理解
 
 - 核心模块：Core、Scene、DataSources、Widgets
+  - [core](./src/core.md)
 - 渲染流程：Scene→Primitive→Command→Context→WebGL
+  - [render](./src/render.md)
 - 图块加载机制：TilingScheme、Provider、RequestScheduler
+  - 加载优化缓存, 优先级控制
 - 加载策略：延迟加载、LOD、屏幕空间误差
 
 #### 3. 源码结构探索
