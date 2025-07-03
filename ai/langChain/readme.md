@@ -2,12 +2,23 @@
 
 ## 基本概念
 
-- [base](./base.md)
+- [base](./src/base.md)
 
 ## 提示词工程
 
-- [prompt](./prompt.md)
+- [prompt](./src/prompt.md)
 
 ## lcel
 
-- [lcel](./lcel.md)
+- [lcel](./src/lcel.md)
+
+## langServer
+
+- [langServer](./src/langServer.md)
+
+## chatMessage
+
+- [chatMessage](./src/chatMessage.md)
+
+## 多模态
+- [multimodal](./src/multimodal.md)
